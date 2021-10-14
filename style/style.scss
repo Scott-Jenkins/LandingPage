@@ -1,3 +1,5 @@
+$shadow: 0px 2px 15px 0px #80808026;
+
 html{
     /*
     box-shadow: inset 0px 0px 40px 6px rgba(15,15,15,0.64) ;
@@ -77,8 +79,9 @@ html{
                     text-decoration: none;
                     height: 100%;
                     border-radius: 10px;
-                    background: #ffffff08;
+                    background: #ffffff;
                     border: none;
+                    box-shadow: $shadow;
 
                     img{
                         border-radius: 10px;
@@ -125,9 +128,11 @@ html{
                 font-size: 24px;
                 border: none;
                 border-radius: 40px;
-                padding: 0px 24px;
+                padding: 4px 24px;
                 width: 100%;
                 margin-top: 80px;
+                box-shadow: $shadow;
+                
             }
             .fa-search{
                 position: absolute;
@@ -147,6 +152,7 @@ html{
 
         a:link, a:active{
             text-decoration: none;
+            color: black;
         }
 
         div[class^="col-"]{
@@ -224,17 +230,17 @@ html{
 
                 .item-row{
                     font-size: 14px;
-                    
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    align-content: center;
                     padding: 10px 20px;
 
                     p{
                         margin: 0;
-                        width: 45%;
-                        float: left;
 
                         &:last-child{
                             text-align: center;
-                            width: 10%;
                         }
                     }
                 }
@@ -245,8 +251,12 @@ html{
                 align-items: center;
                 padding: 20px;
                 border-bottom: 3px solid black;
-                justify-content: space-between;
+                justify-content: flex-end;
                 font-size: 16px;
+
+                i{
+                    margin-left:20px;
+                }
             }
         }
 

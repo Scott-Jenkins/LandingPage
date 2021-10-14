@@ -86,8 +86,10 @@ html body #news .grid-item .card {
   text-decoration: none;
   height: 100%;
   border-radius: 10px;
-  background: #ffffff08;
+  background: #ffffff;
   border: none;
+  -webkit-box-shadow: 0px 2px 15px 0px #80808026;
+          box-shadow: 0px 2px 15px 0px #80808026;
 }
 
 html body #news .grid-item .card img {
@@ -140,9 +142,11 @@ html #google-area #google-search {
   font-size: 24px;
   border: none;
   border-radius: 40px;
-  padding: 0px 24px;
+  padding: 4px 24px;
   width: 100%;
   margin-top: 80px;
+  -webkit-box-shadow: 0px 2px 15px 0px #80808026;
+          box-shadow: 0px 2px 15px 0px #80808026;
 }
 
 html #google-area .fa-search {
@@ -160,6 +164,7 @@ html .text-right {
 
 html a:link, html a:active {
   text-decoration: none;
+  color: black;
 }
 
 html div[class^="col-"] {
@@ -241,18 +246,26 @@ html #todo .newItem .item-row input.item-done {
 
 html #todo .list-area .item-row {
   font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
   padding: 10px 20px;
 }
 
 html #todo .list-area .item-row p {
   margin: 0;
-  width: 45%;
-  float: left;
 }
 
 html #todo .list-area .item-row p:last-child {
   text-align: center;
-  width: 10%;
 }
 
 html #todo .clear-list {
@@ -264,10 +277,14 @@ html #todo .clear-list {
           align-items: center;
   padding: 20px;
   border-bottom: 3px solid black;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   font-size: 16px;
+}
+
+html #todo .clear-list i {
+  margin-left: 20px;
 }
 
 /*

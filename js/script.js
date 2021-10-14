@@ -150,9 +150,10 @@ function getFTColour(){
     {
         $("body, #name").css("color", FT)
         $("#Category-Option").css("color", FT)
-        $("a").css("color", FT)
+        $("a").css("color", FT + " !important")
+        //$(".grid-item .card a").css("color", FT)
         $("input").css("color", FT + " !important")
-        $(".grid-item .card").css("color", FT + " !important")
+        //$(".grid-item .card").css("color", FT + " !important")
         $(".item-dueDate").css("color", FT + " !important")
         
     }

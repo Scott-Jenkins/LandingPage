@@ -16,6 +16,8 @@ class ToDoItem {
 
 $(".fa-plus").click(function (e) { 
 
+    $(".fa-plus").css({"transform": "rotate(90deg)", "transition": "0.1s"});
+
     $("#todo .newItem").html("   ");
 
     var newItem = $("#todo .newItem")
@@ -62,7 +64,7 @@ $(".fa-plus").click(function (e) {
         localStorage.setItem('itemsArray', JSON.stringify(oldItems));
 
         $("#todo .newItem").html("   ");
-        debugger
+        loadItems()
     });
 });
 
