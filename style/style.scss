@@ -11,6 +11,10 @@ html{
         text-shadow: 0 0 0.3vw #ffffff59;
         font-family: monospace;
         font-size:42px;
+
+        .section{
+            position: relative;
+        }
     
         span{
             color: lime;
@@ -40,25 +44,6 @@ html{
         #color-settings{
             font-size: 20px;
             z-index: 100;
-            position: fixed;
-            top: 40%;
-            width: 400px;
-            background: #ffffff08;
-            right:-400px;
-
-            &::before{
-                content: "<";
-                width: 60px;
-                height: 60px;
-                position: absolute;
-                left: -60px;
-                top: 50%;
-                color: white;
-                text-align: center;
-                border-radius: 100%;
-                font-size: 40px;
-                background: #ffffff08;
-            }
 
             input{
                 height: 40px;
@@ -79,6 +64,12 @@ html{
             .grid-item{
                 max-width: 100%;
                 height: 100%;
+
+                &:hover{
+                    transform: scale(1.01);
+                    transition: 0.2s;
+
+                }
                 
 
                 .card{
@@ -127,6 +118,29 @@ html{
             font-size: 24px;
         }
 
+        #google-area{
+            position: relative;
+            
+            #google-search{
+                font-size: 24px;
+                border: none;
+                border-radius: 40px;
+                padding: 0px 24px;
+                width: 100%;
+                margin-top: 80px;
+            }
+            .fa-search{
+                position: absolute;
+                right: 14px;
+                bottom: 15px;
+                font-size: 22px;
+                color: #333;
+                cursor: pointer;
+            }
+            
+
+        }
+
         .text-right{
             text-align: right;
         }
@@ -152,6 +166,89 @@ html{
             left:0;
         }
 
+        #todo{
+            background: #ffffff08;
+            border-radius: 10px;
+            margin-top: 20px;
+
+            .header{
+                display: flex;
+                align-items: center;
+                padding: 20px;
+                border-bottom: 3px solid black;
+                justify-content: space-between;
+                font-size: 24px;
+                
+            }
+
+            .newItem{
+                
+
+                .item-row{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                    font-size: 16px;
+
+                    input{
+                        background:none;
+                        border: none;
+                        padding: 10px;
+
+                        &.item-important{
+                            margin: 10px;
+                        }
+
+                        &.item-name{
+                            min-width: 50px;
+                        }
+
+                        &.item-dueDate{
+                            min-width: 150px;
+                            
+                        }
+
+                        &.item-done{
+                            margin-right: 10px;
+                        }
+                    }
+
+                }
+
+                
+            }
+
+            .list-area{
+
+                .item-row{
+                    font-size: 14px;
+                    
+                    padding: 10px 20px;
+
+                    p{
+                        margin: 0;
+                        width: 45%;
+                        float: left;
+
+                        &:last-child{
+                            text-align: center;
+                            width: 10%;
+                        }
+                    }
+                }
+            }
+
+            .clear-list{
+                display: flex;
+                align-items: center;
+                padding: 20px;
+                border-bottom: 3px solid black;
+                justify-content: space-between;
+                font-size: 16px;
+            }
+        }
 
           
     }

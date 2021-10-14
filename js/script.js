@@ -150,7 +150,11 @@ function getFTColour(){
     {
         $("body, #name").css("color", FT)
         $("#Category-Option").css("color", FT)
+        $("a").css("color", FT)
+        $("input").css("color", FT + " !important")
         $(".grid-item .card").css("color", FT + " !important")
+        $(".item-dueDate").css("color", FT + " !important")
+        
     }
 }
 
@@ -175,6 +179,7 @@ function getATColour(){
     {
         $("html body span").css("color", AT)
         $("#Category-Option").css("border-color", AT)
+        $("#todo .header").css("border-color", AT)
     }
 }
 
@@ -228,10 +233,12 @@ function callNews(category){
     });
 }
 
-var settingsArea = $("#color-settings::before")
-settingsArea.addEventListener("click", expandSideBar)
+$(".fa-search").click(function (e) { 
+    
+    var searchValue = $("#google-search").val()
+    var Url = 'https://www.google.com/search?q='
 
-function expandSideBar(){
-    debugger
-    $("#color-settings").css({left:left}).animate({"left":"400px"}, "slow");
-}
+    console.log(Url + searchValue)
+    window.location.href = Url + searchValue;
+});
+

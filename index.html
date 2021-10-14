@@ -12,8 +12,9 @@
         <link rel="stylesheet" href="//unpkg.com/grapesjs/dist/css/grapes.min.css">
         <script src="//unpkg.com/grapesjs"></script>
     </head>
+    <div id="ambient" style="overflow:hidden; position:absolute; width:100%; height:100vh;"></div>
     <body>
-        <div id="ambient" style="overflow:hidden; position:absolute; width:100%; height:100vh;"></div>
+        
 
         <div class="section">
             <div class="container">
@@ -53,7 +54,7 @@
         <div class="section">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-5">
                         <select name="" id="Category-Option">
                             <option value="">Please Select</option>
                             <option value="Business">Business</option>
@@ -68,19 +69,38 @@
                             
                         </div>
                     </div>
-                    <div class="col-md-5"></div>
+                    <div class="col-md-7">
+                        <div id="google-area">
+                            <input type="text" name="" id="google-search" placeholder="Google Search">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div id="todo">
+                            <div class="header">
+                                Add Item
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="newItem"></div>
+                            <div class="list-area"></div>
+                            <div class="clear-list">Clear List<i class="far fa-times-circle"></i></div>
+                            
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         
 
+        <script src="https://kit.fontawesome.com/c4bce42dd5.js" crossorigin="anonymous"></script>
         
-        <script src="js/animeBG.js"></script>
-        <script src="js/script.js" async defer></script>
         <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
+  <script src="js/ToDoList.js"></script>
+        <script src="js/animeBG.js"></script>
+        <script src="js/script.js" async defer></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 </html>

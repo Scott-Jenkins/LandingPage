@@ -16,6 +16,10 @@ html body {
   font-size: 42px;
 }
 
+html body .section {
+  position: relative;
+}
+
 html body span {
   color: lime;
 }
@@ -43,25 +47,6 @@ html body #spotify-area {
 html body #color-settings {
   font-size: 20px;
   z-index: 100;
-  position: fixed;
-  top: 40%;
-  width: 400px;
-  background: #ffffff08;
-  right: -400px;
-}
-
-html body #color-settings::before {
-  content: "<";
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  left: -60px;
-  top: 50%;
-  color: white;
-  text-align: center;
-  border-radius: 100%;
-  font-size: 40px;
-  background: #ffffff08;
 }
 
 html body #color-settings input {
@@ -88,6 +73,13 @@ html body #news {
 html body #news .grid-item {
   max-width: 100%;
   height: 100%;
+}
+
+html body #news .grid-item:hover {
+  -webkit-transform: scale(1.01);
+          transform: scale(1.01);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 
 html body #news .grid-item .card {
@@ -140,6 +132,28 @@ html #Category-Option {
   font-size: 24px;
 }
 
+html #google-area {
+  position: relative;
+}
+
+html #google-area #google-search {
+  font-size: 24px;
+  border: none;
+  border-radius: 40px;
+  padding: 0px 24px;
+  width: 100%;
+  margin-top: 80px;
+}
+
+html #google-area .fa-search {
+  position: absolute;
+  right: 14px;
+  bottom: 15px;
+  font-size: 22px;
+  color: #333;
+  cursor: pointer;
+}
+
 html .text-right {
   text-align: right;
 }
@@ -162,6 +176,98 @@ html .bvambient_particle {
 html #ambient {
   top: 0;
   left: 0;
+}
+
+html #todo {
+  background: #ffffff08;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+html #todo .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 20px;
+  border-bottom: 3px solid black;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 24px;
+}
+
+html #todo .newItem .item-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  font-size: 16px;
+}
+
+html #todo .newItem .item-row input {
+  background: none;
+  border: none;
+  padding: 10px;
+}
+
+html #todo .newItem .item-row input.item-important {
+  margin: 10px;
+}
+
+html #todo .newItem .item-row input.item-name {
+  min-width: 50px;
+}
+
+html #todo .newItem .item-row input.item-dueDate {
+  min-width: 150px;
+}
+
+html #todo .newItem .item-row input.item-done {
+  margin-right: 10px;
+}
+
+html #todo .list-area .item-row {
+  font-size: 14px;
+  padding: 10px 20px;
+}
+
+html #todo .list-area .item-row p {
+  margin: 0;
+  width: 45%;
+  float: left;
+}
+
+html #todo .list-area .item-row p:last-child {
+  text-align: center;
+  width: 10%;
+}
+
+html #todo .clear-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 20px;
+  border-bottom: 3px solid black;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 16px;
 }
 
 /*
