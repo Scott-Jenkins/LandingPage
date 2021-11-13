@@ -39,21 +39,6 @@ function SetTime() {
     }
 }
 
-function LoadSpotify() {
-
-    var url = ""
-    fetch(url)
-    .then(response => response.json())
-    .then(content => {
-      
-      
-    })
-    .catch(err => {
-      console.error(err);
-    }
-); 
-
-}
 getLocation()
 function getLocation() {
     if (navigator.geolocation) {
@@ -181,6 +166,7 @@ function getATColour(){
         $("html body span").css("color", AT)
         $("#Category-Option").css("border-color", AT)
         $("#todo .header").css("border-color", AT)
+        $("*").css("border-color", AT)
     }
 }
 
@@ -204,6 +190,9 @@ function callNews(category){
 
     var APIKEY = "ef57e1e514c34b3ea37e2f0e40bd41dd"
     var Url = "https://newsapi.org/v2/top-headlines?country=us&category=" + category + "&sortBy=popularity&apiKey=" + APIKEY
+
+    //var APIKEY = 'qg72bVljFFc_839SxC3mvDgeDURX3TLueNYUyuk0Gqv_qxb_'
+    //var Url = 'http://api.currentsapi.services/v1/category="' + category + '"'
 
     var newsArea = $("#news")
     $(newsArea).html("");
@@ -243,3 +232,13 @@ $(".fa-search").click(function (e) {
     window.location.href = Url + searchValue;
 });
 
+
+
+$( ".loading" ).each(function( index ) {
+    if( $(this).is(':empty') || $(this).text() == "" ){
+        //debugger
+        $(this).removeClass( "loading" )
+      } else {
+          
+      }
+  });

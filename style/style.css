@@ -8,11 +8,10 @@ html {
 
 html body {
   padding: 0;
-  margin: 10%;
+  margin: 1%;
   background: #002b36;
   color: #eee8d5;
   text-shadow: 0 0 0.3vw #ffffff59;
-  font-family: monospace;
   font-size: 42px;
 }
 
@@ -24,8 +23,17 @@ html body span {
   color: lime;
 }
 
+html body p {
+  margin: 0;
+}
+
 html body #weather-area {
   margin-bottom: 20px;
+}
+
+html body #weather-area img {
+  -webkit-filter: drop-shadow(2px 2px 5px #80808049);
+          filter: drop-shadow(2px 2px 5px #80808049);
 }
 
 html body #name {
@@ -49,7 +57,24 @@ html body #color-settings {
   z-index: 100;
 }
 
-html body #color-settings input {
+html body #color-settings .setting {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+html body #color-settings .setting label {
+  margin-right: 10px;
+}
+
+html body #color-settings .setting input {
   height: 40px;
   width: 40px;
 }
@@ -158,6 +183,49 @@ html #google-area .fa-search {
   cursor: pointer;
 }
 
+html #currencystats #user-drop {
+  border-bottom: 1px solid;
+}
+
+html #currencystats #user-drop i {
+  font-size: 24px;
+}
+
+html #currencystats ul {
+  background-color: rgba(0, 0, 0, 0.473);
+  font-size: 12px;
+  list-style: none;
+  padding: 2px 3px;
+}
+
+html #currencystats ul li {
+  border-bottom: 1px solid gray;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[5];
+      grid-template-columns: repeat(5, 1fr);
+  padding: 2px 4px;
+}
+
+html #currencystats ul li p {
+  padding-left: 5px;
+}
+
+html #currencystats ul li:not(:first-child) p {
+  margin: 0;
+  border-right: 1px solid gray;
+  text-transform: capitalize;
+}
+
+html #currencystats ul li:not(:first-child) p:last-child {
+  border: none;
+  color: lawngreen;
+}
+
+html #currencystats ul li:not(:first-child) p:first-child {
+  font-size: 14px;
+}
+
 html .text-right {
   text-align: right;
 }
@@ -181,12 +249,16 @@ html .bvambient_particle {
 html #ambient {
   top: 0;
   left: 0;
+  -webkit-filter: blur(2px);
+          filter: blur(2px);
 }
 
 html #todo {
   background: #ffffff08;
   border-radius: 10px;
   margin-top: 20px;
+  -webkit-box-shadow: 0px 2px 15px 0px #80808026;
+          box-shadow: 0px 2px 15px 0px #80808026;
 }
 
 html #todo .header {
@@ -202,6 +274,7 @@ html #todo .header {
       -ms-flex-pack: justify;
           justify-content: space-between;
   font-size: 24px;
+  cursor: pointer;
 }
 
 html #todo .newItem .item-row {
@@ -220,6 +293,7 @@ html #todo .newItem .item-row {
           align-items: center;
   width: 100%;
   font-size: 16px;
+  padding: 10px 20px;
 }
 
 html #todo .newItem .item-row input {
@@ -252,20 +326,41 @@ html #todo .list-area .item-row {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -ms-flex-line-pack: center;
       align-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   padding: 10px 20px;
+  position: relative;
+  min-height: 62px;
 }
 
 html #todo .list-area .item-row p {
   margin: 0;
 }
 
+html #todo .list-area .item-row p:nth-child(3) {
+  text-align: center;
+  font-size: 32px;
+  position: absolute;
+  right: 60px;
+}
+
 html #todo .list-area .item-row p:last-child {
   text-align: center;
+  font-size: 32px;
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+}
+
+html #todo .list-area .item-row p:first-child {
+  font-weight: 500;
 }
 
 html #todo .clear-list {
@@ -276,15 +371,56 @@ html #todo .clear-list {
       -ms-flex-align: center;
           align-items: center;
   padding: 20px;
-  border-bottom: 3px solid black;
+  border-top: 3px solid black;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
   font-size: 16px;
+  cursor: pointer;
 }
 
 html #todo .clear-list i {
   margin-left: 20px;
+}
+
+html .line-through {
+  text-decoration: line-through;
+}
+
+html .loading {
+  display: block;
+  background: #f6f6f636;
+  background: -webkit-gradient(linear, left top, right top, color-stop(8%, #F6F6F636), color-stop(18%, #F0F0F036), color-stop(33%, #F6F6F636));
+  background: linear-gradient(to right, #F6F6F636 8%, #F0F0F036 18%, #F6F6F636 33%);
+  background-size: 400% 400%;
+  -webkit-animation: gradient 3s ease infinite;
+          animation: gradient 3s ease infinite;
+  min-height: 30px;
+  border-radius: 8px;
+}
+
+@-webkit-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /*
