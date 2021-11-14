@@ -286,7 +286,7 @@ new Vue({
                 showCancelButton: true        
             }).then((result) => {
                 if (result.value) {
-                    var olditems = JSON.parse(localStorage.getItem('bookmarks'))
+                    var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
 
                     var newBm = 
                     {
