@@ -1,10 +1,20 @@
 $shadow: 0px 2px 15px 0px #80808026;
 
+:root{
+    --accent: #333;
+    --font:#333;
+    --background:#333;
+}
+
 html{
     /*
     box-shadow: inset 0px 0px 40px 6px rgba(15,15,15,0.64) ;
     height: 100%;
     */
+    main{
+        display: none;
+    }
+
     body{
         padding: 0;
         margin: 1%;
@@ -57,7 +67,7 @@ html{
             .setting{
                 display: flex;
                 align-items: center;
-                justify-content: flex-end;
+                justify-content: space-between;
                 margin-bottom: 10px;
 
                 label{
@@ -71,6 +81,20 @@ html{
             }
 
             
+        }
+
+        #info-settings{
+            font-size: 20px;
+            z-index: 100;
+
+            .setting{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+
+
         }
 
         #news{
@@ -215,6 +239,164 @@ html{
             
         }
 
+        #sidebar{
+            position: fixed;
+            top:0;
+            left:0;
+            height: 100vh;
+            background-color: rgba(37, 37, 37, 0.596);
+            width: 50px;
+            z-index: 100;
+            box-shadow: 5px 0px 10px 0px #24242473;
+
+            .options{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .option{
+                    font-size: 26px;
+                    padding: 14px 0;
+                    color: var(--font);
+                    background-clip: text;
+                    text-shadow: 0px 3px 3px #4c4c4c4a;
+                    cursor: pointer;
+                    transition: 0.2s;
+
+                    &:after{
+                        content: '';
+                        display: block;
+                        width: 0;
+                        height: 2px;
+                        background: var(--accent);
+                        margin: 10px 0;
+                        -webkit-transition: width .2s ease-in;
+                        transition: width .2s ease-in;
+                    }
+                    &:hover:after {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .settings{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: absolute;
+                bottom:0;
+                width: 100%;
+
+                i{
+                    font-size: 26px;
+                    padding-top: 14px;
+                    color: var(--font);
+                    background-clip: text;
+                    text-shadow: 0px 3px 3px #4c4c4c4a;
+                    cursor: pointer;
+                    transition: 0.2s;
+
+                    &:after{
+                        content: '';
+                        display: block;
+                        width: 0;
+                        height: 2px;
+                        background: var(--accent);
+                        margin: 10px 0;
+                        -webkit-transition: width .2s ease-in;
+                        transition: width .2s ease-in;
+                    }
+                    &:hover:after {
+                        width: 100%;
+                    }
+                }
+
+            }
+        }
+
+        #settingsmenu{
+            position: fixed;
+            top:0;
+            left: 50px;
+            width:0px; 
+            height: 100vh;
+            visibility: hidden;
+            background-color: rgba(255, 255, 255, 0.952);
+            z-index: 100;
+            padding: 10%;
+
+            &.active{
+                visibility: visible;
+                width: calc(100vw - 50px);
+                transition: 0.2s;
+            }
+
+            h2{
+                border-left: 2px solid var(--accent);
+                padding-left: 10px;
+            }
+
+            #theme{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .item{
+                    position: relative;
+                    height: 50px;
+
+                    &:first-child{
+                        margin-left:0px;
+                    }
+
+                    &:last-child{
+                        margin-right: 0px;
+                    }
+
+                    &.active{
+                        box-shadow: 0px 20px 0px -10px var(--background), 0px -20px 0px -10px var(--background), 20px 0px 0px -10px var(--background), -20px 0px 0px -10px var(--background), 0px 0px 0px 10px var(--accent), 5px 5px 15px 5px rgba(0,0,0,0);
+                    }
+
+                    span{
+                        width: 86px;
+                        padding: 12px;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: center;
+                        position: absolute;
+                        
+                        i, svg{
+                            max-width: 50px;
+                            height: auto;
+                        }
+
+                    }
+
+                    input{
+                        margin-top: 20px;
+                        font-size: 14px;
+                        position: absolute;
+                        right: 10px;
+                        top: 10px;
+
+                        &[type=file] {
+                            right: 30px;
+                            top: 2px;
+                        }
+                    }
+                    p{
+                        font-size: 16px;
+                        padding-top: 10px;
+                        position: absolute;
+                        left: 100px;
+                        top: 10px;
+                    }
+                }
+                
+            }
+        }
+
         .text-right{
             text-align: right;
         }
@@ -237,6 +419,16 @@ html{
         }
 
         #ambient{
+            top: 0;
+            left:0;
+            filter: blur(2px);
+            display: none;
+            position: fixed !important;
+        }
+
+        #bgImage{
+            position: fixed;
+            z-index: 0;
             top: 0;
             left:0;
             filter: blur(2px);

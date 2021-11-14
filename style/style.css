@@ -1,9 +1,19 @@
+:root {
+  --accent: #333;
+  --font:#333;
+  --background:#333;
+}
+
 html {
   /*
     box-shadow: inset 0px 0px 40px 6px rgba(15,15,15,0.64) ;
     height: 100%;
     */
   /* BVAmbient Style */
+}
+
+html main {
+  display: none;
 }
 
 html body {
@@ -64,9 +74,9 @@ html body #color-settings .setting {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin-bottom: 10px;
 }
 
@@ -77,6 +87,24 @@ html body #color-settings .setting label {
 html body #color-settings .setting input {
   height: 40px;
   width: 40px;
+}
+
+html body #info-settings {
+  font-size: 20px;
+  z-index: 100;
+}
+
+html body #info-settings .setting {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 html body #news {
@@ -226,6 +254,199 @@ html #currencystats ul li:not(:first-child) p:first-child {
   font-size: 14px;
 }
 
+html #sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background-color: rgba(37, 37, 37, 0.596);
+  width: 50px;
+  z-index: 100;
+  -webkit-box-shadow: 5px 0px 10px 0px #24242473;
+          box-shadow: 5px 0px 10px 0px #24242473;
+}
+
+html #sidebar .options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+html #sidebar .options .option {
+  font-size: 26px;
+  padding: 14px 0;
+  color: var(--font);
+  background-clip: text;
+  text-shadow: 0px 3px 3px #4c4c4c4a;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+html #sidebar .options .option:after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  margin: 10px 0;
+  -webkit-transition: width .2s ease-in;
+  transition: width .2s ease-in;
+}
+
+html #sidebar .options .option:hover:after {
+  width: 100%;
+}
+
+html #sidebar .settings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+html #sidebar .settings i {
+  font-size: 26px;
+  padding-top: 14px;
+  color: var(--font);
+  background-clip: text;
+  text-shadow: 0px 3px 3px #4c4c4c4a;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+html #sidebar .settings i:after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  margin: 10px 0;
+  -webkit-transition: width .2s ease-in;
+  transition: width .2s ease-in;
+}
+
+html #sidebar .settings i:hover:after {
+  width: 100%;
+}
+
+html #settingsmenu {
+  position: fixed;
+  top: 0;
+  left: 50px;
+  width: 0px;
+  height: 100vh;
+  visibility: hidden;
+  background-color: rgba(255, 255, 255, 0.952);
+  z-index: 100;
+  padding: 10%;
+}
+
+html #settingsmenu.active {
+  visibility: visible;
+  width: calc(100vw - 50px);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+html #settingsmenu h2 {
+  border-left: 2px solid var(--accent);
+  padding-left: 10px;
+}
+
+html #settingsmenu #theme {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+html #settingsmenu #theme .item {
+  position: relative;
+  height: 50px;
+}
+
+html #settingsmenu #theme .item:first-child {
+  margin-left: 0px;
+}
+
+html #settingsmenu #theme .item:last-child {
+  margin-right: 0px;
+}
+
+html #settingsmenu #theme .item.active {
+  -webkit-box-shadow: 0px 20px 0px -10px var(--background), 0px -20px 0px -10px var(--background), 20px 0px 0px -10px var(--background), -20px 0px 0px -10px var(--background), 0px 0px 0px 10px var(--accent), 5px 5px 15px 5px rgba(0, 0, 0, 0);
+          box-shadow: 0px 20px 0px -10px var(--background), 0px -20px 0px -10px var(--background), 20px 0px 0px -10px var(--background), -20px 0px 0px -10px var(--background), 0px 0px 0px 10px var(--accent), 5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+html #settingsmenu #theme .item span {
+  width: 86px;
+  padding: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+}
+
+html #settingsmenu #theme .item span i, html #settingsmenu #theme .item span svg {
+  max-width: 50px;
+  height: auto;
+}
+
+html #settingsmenu #theme .item input {
+  margin-top: 20px;
+  font-size: 14px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+html #settingsmenu #theme .item input[type=file] {
+  right: 30px;
+  top: 2px;
+}
+
+html #settingsmenu #theme .item p {
+  font-size: 16px;
+  padding-top: 10px;
+  position: absolute;
+  left: 100px;
+  top: 10px;
+}
+
 html .text-right {
   text-align: right;
 }
@@ -247,6 +468,17 @@ html .bvambient_particle {
 }
 
 html #ambient {
+  top: 0;
+  left: 0;
+  -webkit-filter: blur(2px);
+          filter: blur(2px);
+  display: none;
+  position: fixed !important;
+}
+
+html #bgImage {
+  position: fixed;
+  z-index: 0;
   top: 0;
   left: 0;
   -webkit-filter: blur(2px);

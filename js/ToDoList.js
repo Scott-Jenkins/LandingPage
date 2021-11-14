@@ -75,7 +75,6 @@ function deleteToDo(){
         if (oldItems[indexInArray].name == currentTitle){
             debugger;
             oldItems.splice(indexInArray, 1);
-            console.log(oldItems)
             localStorage.setItem('itemsArray', JSON.stringify(oldItems));
         }
 
@@ -87,7 +86,6 @@ function deleteToDo(){
 loadItems()
 function loadItems(){
     var oldItems = JSON.parse(localStorage.getItem('itemsArray')) || [];
-    console.log(oldItems)
 
     var listArea = $(".list-area")
     $(listArea).html("   ")

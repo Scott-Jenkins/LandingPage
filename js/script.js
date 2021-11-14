@@ -61,6 +61,7 @@ function showPosition(position) {
         $("#temp").text(Math.trunc(temp) + "°C")
 
         let location =  content.name
+        localStorage.setItem("location", location)
         $("#location").text(location)
 
         let icon = document.querySelector("img#icon");
@@ -108,8 +109,12 @@ function getColour(){
         
     } else
     {
+        $("#Background-Color").attr("value", BG)
         $("body").css("background-color", BG)
         $(".grid-item .card").css("background-color", BG + "d1")
+        $("#settingsmenu").css("background-color", BG + "f3")
+        $(":root").css("--background", BG)
+        
     }
 }
 
@@ -133,6 +138,7 @@ function getFTColour(){
         
     } else
     {
+        $("#FT-Color").attr("value", FT)
         $("body, #name").css("color", FT)
         $("#Category-Option").css("color", FT)
         $("a").css("color", FT + " !important")
@@ -140,6 +146,7 @@ function getFTColour(){
         $("input").css("color", FT + " !important")
         //$(".grid-item .card").css("color", FT + " !important")
         $(".item-dueDate").css("color", FT + " !important")
+        $(":root").css("--font", FT)
         
     }
 }
@@ -163,10 +170,13 @@ function getATColour(){
         
     } else
     {
+        $("#AT-Color").attr("value", AT)
         $("html body span").css("color", AT)
         $("#Category-Option").css("border-color", AT)
         $("#todo .header").css("border-color", AT)
-        $("*").css("border-color", AT)
+        //$("*").css("border-color", AT)
+        $(":root").css("--accent", AT)
+        $("html #sidebar .options .option:hover:after").css("background-color", AT + " !important")
     }
 }
 
@@ -201,7 +211,7 @@ function callNews(category){
         url: Url,
         context: document.body
     }).done(function(content) {
-        console.log(content)
+
 
         for (let i = 0; i < 8; i++) {
             
@@ -227,8 +237,6 @@ $(".fa-search").click(function (e) {
     
     var searchValue = $("#google-search").val()
     var Url = 'https://www.google.com/search?q='
-
-    console.log(Url + searchValue)
     window.location.href = Url + searchValue;
 });
 
@@ -242,3 +250,5 @@ $( ".loading" ).each(function( index ) {
           
       }
   });
+$("main").fadeIn(1000);
+
