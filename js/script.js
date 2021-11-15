@@ -251,4 +251,3 @@ $( ".loading" ).each(function( index ) {
       }
   });
 $("main").fadeIn(1000);
-

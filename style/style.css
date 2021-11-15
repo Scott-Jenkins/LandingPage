@@ -16,6 +16,12 @@ html main {
   display: none;
 }
 
+@media (max-width: 900px) {
+  html main {
+    margin-left: 50px;
+  }
+}
+
 html body {
   padding: 0;
   margin: 1%;
@@ -447,6 +453,88 @@ html #settingsmenu #theme .item p {
   top: 10px;
 }
 
+html #bookmarks .bookmarks {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (25%)[4];
+      grid-template-columns: repeat(4, 25%);
+}
+
+@media (max-width: 1000px) {
+  html #bookmarks .bookmarks {
+    -ms-grid-columns: (33%)[3];
+        grid-template-columns: repeat(3, 33%);
+  }
+}
+
+html #bookmarks .bookmarks .add-bookmark {
+  font-size: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  margin: auto;
+  cursor: pointer;
+}
+
+html #bookmarks .bookmarks .add-bookmark i {
+  padding-left: 5px;
+  font-size: 32px;
+}
+
+html #bookmarks .bookmarks .bookmark {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 10px 4px;
+  position: relative;
+}
+
+html #bookmarks .bookmarks .bookmark img {
+  width: 32px;
+  border-radius: 100%;
+}
+
+html #bookmarks .bookmarks .bookmark a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 12px;
+  color: var(--font);
+  text-transform: capitalize;
+}
+
+html #bookmarks .bookmarks .bookmark i {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 14px;
+  visibility: hidden;
+}
+
+html #bookmarks .bookmarks .bookmark:hover i {
+  visibility: visible;
+  cursor: pointer;
+}
+
 html .text-right {
   text-align: right;
 }
@@ -483,6 +571,10 @@ html #bgImage {
   left: 0;
   -webkit-filter: blur(2px);
           filter: blur(2px);
+  height: 100vh;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 html #todo {
@@ -603,7 +695,7 @@ html #todo .clear-list {
       -ms-flex-align: center;
           align-items: center;
   padding: 20px;
-  border-top: 3px solid black;
+  border-top: 3px solid var(--accent);
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;

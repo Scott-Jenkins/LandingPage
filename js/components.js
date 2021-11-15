@@ -306,38 +306,52 @@ new Vue({
             localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks) )
         },
         fetchFavicon(url){
-            var self = this
-            
-            url = url.replaceAll("https://", "");
+            return 'http://icon.horse/icon/' +  url.replaceAll("https://", "");
+        },
+        shortenUrl(url){
+            return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('.')[0]
+        },
+        extendUrl(url){
+            if (url.includes("https://" || "http://") === false){
+                url = "https://" + url
+            }
+            return url
+        },
+        deleteBookmark(BMurl){
 
-            $.ajax({
-                type: "method",
-                url: 'https://icon.horse/icon/' + url ,
-                data: "data",
-                dataType: "dataType",
-                success: function (response) {
-                    debugger
-                    console.log(response)
+            var self = this
+
+            var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
+            console.log(BMurl)
+            $.each(olditems, function (indexInArray, valueOfElement) { 
+                if (BMurl === valueOfElement.url){
+                    olditems.splice(indexInArray, 1)
+                    console.log('delete this ' + BMurl)
+                    self.bookmarks = olditems
+                    self.ArrayToStorage()
                 }
             });
         }
 
     },
     template:`
-    <div >
+    <div id="bookmarks">
+        
         <div class="bookmarks">
-            <div class="add-bookmark" @click="this.openPopup">
-                Add Bookmark
-                <i class="fas fa-plus" aria-hidden="true"></i>
-            </div>
+            
             <div class="bookmark" v-for="items in bookmarks">
-                
-                <a :href="items.url">
-                <img :src="fetchFavicon(items.url)">
-                    {{items.url}}
+                <i @click="deleteBookmark(items.url)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Bookmark"></i>
+                <a :href="extendUrl(items.url)" target="_blank">
+                    <img :src="fetchFavicon(items.url)">
+                    {{shortenUrl(items.url) }}
                 </a>
             </div>
+            <div class="add-bookmark" @click="this.openPopup">
+                <i class="fas fa-plus" aria-hidden="true"></i>
+                Add Bookmark
+            </div>
         </div>
+        
     </div>`,
     
     
