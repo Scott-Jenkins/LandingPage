@@ -312,12 +312,12 @@ new Vue({
 
             $.ajax({
                 type: "method",
-                url: 'https://favicongrabber.com/api/grab/' + url ,
+                url: 'https://icon.horse/icon/' + url ,
                 data: "data",
                 dataType: "dataType",
                 success: function (response) {
                     debugger
-                    return response.icons.src
+                    console.log(response)
                 }
             });
         }
