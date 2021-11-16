@@ -38,40 +38,6 @@ function SetTime() {
         }
     }
 }
-
-getLocation()
-function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    }
-}
-
-function showPosition(position) {
-    let latitude = position.coords.latitude
-    let longitude = position.coords.longitude
-  
-    let localUrl = "https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ latitude +"&lon="+ longitude +"&units=metric"
-  
-    $.ajax({
-        url: localUrl,
-        context: document.body
-    }).done(function(content) {
-
-        let temp =  content.main.temp
-        $("#temp").text(Math.trunc(temp) + "°C")
-
-        let location =  content.name
-        localStorage.setItem("location", location)
-        $("#location").text(location)
-
-        let icon = document.querySelector("img#icon");
-        icon.src = "http://openweathermap.org/img/wn/"+ content.weather[0].icon + ".png";
-        $("#weather-area").append(icon); 
-
-    });
-
-    
-}
 /////////////////////////////////////////////////////ignore above
 
 let nameLabel = document.querySelector("#name")
