@@ -24,12 +24,8 @@
                         <p id="introduction"></p>
                     </div>
                     <div class="col-sm-5 text-right">
-                        <div id="weather-area">
-                            <h1 id="temp" class="loading"></h1>
-                            <h2 id="location" class="loading"></h2>
-                            <img src="img/loading.gif" alt="" id="icon">
-                        </div>
-                        <bookmarks></bookmarks>
+                        <weather></weather>
+                        
                     </div>
                     
                 </div>
@@ -38,6 +34,13 @@
         <div class="section">
             <div class="container">
                 <div class="row">
+                    <div class="col-md-12">
+                        <div id="google-area">
+                            <input type="text" name="" id="google-search" placeholder="Google Search">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <bookmarks></bookmarks>
+                    </div>
                     <div class="col-md-5">
                         <select name="" id="Category-Option">
                             <option value="">Please Select</option>
@@ -54,21 +57,8 @@
                         </div>
                     </div>
                     <div class="col-md-7">
-                        <div id="google-area">
-                            <input type="text" name="" id="google-search" placeholder="Google Search">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <div id="todo">
-                            <div class="header">
-                                Add Item
-                                <i class="fas fa-plus"></i>
-                            </div>
-                            <div class="newItem"></div>
-                            <div class="list-area"></div>
-                            <div class="clear-list">Clear List<i class="far fa-times-circle"></i></div>
-                            
-                            
-                        </div>
+                        <p class="todo-title">To-Do List</p>
+                        <todo></todo>
                     </div>
                 </div>
             </div>
@@ -79,14 +69,15 @@
         <script src="https://kit.fontawesome.com/c4bce42dd5.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
         <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
   <script src="js/ToDoList.js"></script>
+  <script src="js/components.js"></script>
         <script src="js/animeBG.js"></script>
         <script src="js/script.js" async defer></script>
-        <script src="js/components.js"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
     </body>

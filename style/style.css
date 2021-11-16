@@ -43,15 +43,6 @@ html body p {
   margin: 0;
 }
 
-html body #weather-area {
-  margin-bottom: 20px;
-}
-
-html body #weather-area img {
-  -webkit-filter: drop-shadow(2px 2px 5px #80808049);
-          filter: drop-shadow(2px 2px 5px #80808049);
-}
-
 html body #name {
   font-size: 4rem;
   background: none;
@@ -144,7 +135,7 @@ html body #news .grid-item:hover {
 html body #news .grid-item .card {
   text-decoration: none;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 14px;
   background: #ffffff;
   border: none;
   -webkit-box-shadow: 0px 2px 15px 0px #80808026;
@@ -193,6 +184,12 @@ html #Category-Option {
   font-size: 24px;
 }
 
+html .todo-title {
+  border-bottom: 3px solid var(--accent);
+  font-size: 24px;
+  margin-top: 24px;
+}
+
 html #google-area {
   position: relative;
 }
@@ -203,7 +200,7 @@ html #google-area #google-search {
   border-radius: 40px;
   padding: 4px 24px;
   width: 100%;
-  margin-top: 80px;
+  margin-top: 0;
   -webkit-box-shadow: 0px 2px 15px 0px #80808026;
           box-shadow: 0px 2px 15px 0px #80808026;
 }
@@ -430,6 +427,7 @@ html #settingsmenu #theme .item span {
 html #settingsmenu #theme .item span i, html #settingsmenu #theme .item span svg {
   max-width: 50px;
   height: auto;
+  color: var(--accent);
 }
 
 html #settingsmenu #theme .item input {
@@ -456,14 +454,14 @@ html #settingsmenu #theme .item p {
 html #bookmarks .bookmarks {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (25%)[4];
-      grid-template-columns: repeat(4, 25%);
+  -ms-grid-columns: (auto)[8];
+      grid-template-columns: repeat(8, auto);
 }
 
 @media (max-width: 1000px) {
   html #bookmarks .bookmarks {
-    -ms-grid-columns: (33%)[3];
-        grid-template-columns: repeat(3, 33%);
+    -ms-grid-columns: (auto)[4];
+        grid-template-columns: repeat(4, auto);
   }
 }
 
@@ -564,6 +562,15 @@ html #ambient {
   position: fixed !important;
 }
 
+html #defaultCanvas0 {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0.2;
+  z-index: -10;
+}
+
 html #bgImage {
   position: fixed;
   z-index: 0;
@@ -577,31 +584,26 @@ html #bgImage {
      object-fit: cover;
 }
 
-html #todo {
-  background: #ffffff08;
-  border-radius: 10px;
-  margin-top: 20px;
-  -webkit-box-shadow: 0px 2px 15px 0px #80808026;
-          box-shadow: 0px 2px 15px 0px #80808026;
+html #todos.active {
+  width: calc(100vw - 68px);
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: var(--background);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 
-html #todo .header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 20px;
-  border-bottom: 3px solid black;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  font-size: 24px;
-  cursor: pointer;
+html #todos .todos {
+  position: relative;
 }
 
-html #todo .newItem .item-row {
+html #todos .todos .todo {
+  position: relative;
+}
+
+html #todos .todos .todo a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -609,102 +611,79 @@ html #todo .newItem .item-row {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  font-size: 12px;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 100%;
-  font-size: 16px;
-  padding: 10px 20px;
+  padding: 12px 5px 12px 12px;
 }
 
-html #todo .newItem .item-row input {
-  background: none;
-  border: none;
-  padding: 10px;
+html #todos .todos .todo a span {
+  color: var(--font);
 }
 
-html #todo .newItem .item-row input.item-important {
-  margin: 10px;
-}
-
-html #todo .newItem .item-row input.item-name {
-  min-width: 50px;
-}
-
-html #todo .newItem .item-row input.item-dueDate {
-  min-width: 150px;
-}
-
-html #todo .newItem .item-row input.item-done {
-  margin-right: 10px;
-}
-
-html #todo .list-area .item-row {
+html #todos .todos .todo a span .name {
   font-size: 14px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+}
+
+html #todos .todos .todo i {
+  visibility: hidden;
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  top: 10px;
+}
+
+html #todos .todos .todo .important i {
+  font-size: 22px !important;
+  visibility: visible;
+  right: 22px;
+  top: 16px;
+}
+
+html #todos .todos .todo:hover i {
+  visibility: visible;
+  font-size: 14px;
+}
+
+html #todos .todos .add-item {
+  font-size: 14px;
+  cursor: pointer;
+  text-align: right;
   padding: 10px 20px;
+}
+
+html #todos .todos .add-item i {
+  padding-left: 5px;
+}
+
+html #weather .title {
+  font-size: 42px;
+}
+
+html #weather .description {
+  font-size: 24px;
+  text-transform: capitalize;
+}
+
+html #weather .temp {
+  color: var(--font);
+  font-size: 32px;
   position: relative;
-  min-height: 62px;
 }
 
-html #todo .list-area .item-row p {
-  margin: 0;
-}
-
-html #todo .list-area .item-row p:nth-child(3) {
-  text-align: center;
-  font-size: 32px;
+html #weather .temp img {
   position: absolute;
-  right: 60px;
+  right: 64px;
+  top: -10px;
 }
 
-html #todo .list-area .item-row p:last-child {
-  text-align: center;
-  font-size: 32px;
-  position: absolute;
-  right: 20px;
-  cursor: pointer;
-}
-
-html #todo .list-area .item-row p:first-child {
-  font-weight: 500;
-}
-
-html #todo .clear-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 20px;
-  border-top: 3px solid var(--accent);
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+html #weather .hi-low, html #weather .humidity {
+  color: var(--font);
   font-size: 16px;
-  cursor: pointer;
-}
-
-html #todo .clear-list i {
-  margin-left: 20px;
 }
 
 html .line-through {
@@ -745,6 +724,33 @@ html .loading {
   100% {
     background-position: 0% 50%;
   }
+}
+
+html #swal2-html-container {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+html #swal2-html-container span {
+  color: #595959 !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+html #swal2-html-container span input {
+  margin-top: 0;
 }
 
 /*

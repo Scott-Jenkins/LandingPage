@@ -6,10 +6,12 @@ new Vue({
         sidebar: 
             {
                 'home':{
-                    class : 'fas fa-home'
+                    class : 'fas fa-home',
+                    link: '/'
                 },
                 'news':{
-                    class : 'far fa-newspaper'
+                    class : 'far fa-newspaper',
+                    link: 'https://www.google.co.uk/'
                 }
             }
         
@@ -24,8 +26,8 @@ new Vue({
     template:`
     <div id="sidebar">
         <div class="options">
-            <div class="option" v-for="options in sidebar" :class="options.class">
-            </div>
+            <a class="option" v-for="options in sidebar" :class="options.class" :href="options.link">
+            </a>
         </div>
         <div class="settings">
             <i class="fas fa-cog" onclick="openSettings()"></i>
@@ -151,7 +153,21 @@ new Vue({
 
                   $("#none").removeAttr("checked");
                   $("#image").removeAttr("checked");
+                  $("#Waves").removeAttr("checked");
                   $("#bgImage").hide();
+                  $("#defaultCanvas0").hide();
+                  
+                  break;
+                case 'Waves':
+                  $("#Waves").attr("checked", "true")
+                  $("#defaultCanvas0").fadeIn('slow');
+                  
+                  $("#none").removeAttr("checked");
+                  $("#image").removeAttr("checked");
+                  $("#bubble").removeAttr("checked");
+                  $("#bgImage").hide();
+                  $("#ambient").hide();
+                    
                   break;
                 case 'image':
                   $("#ambient").hide();
@@ -161,14 +177,21 @@ new Vue({
 
                   $("#bubble").removeAttr("checked");
                   $("#none").removeAttr("checked");
+                  $("#Waves").removeAttr("checked");
+                  $("#defaultCanvas0").hide();
                   break; 
 
                 case 'none':
-                  $("#ambient").hide();
+                  
                   $("#none").attr("checked", "true")
+
                   $("#bgImage").hide();
+                  $("#defaultCanvas0").hide();
+                  $("#ambient").hide();
+
                   $("#bubble").removeAttr("checked");
                   $("#image").removeAttr("checked");
+                  $("#Waves").removeAttr("checked");
                   break;
                 default:
             }
@@ -216,6 +239,11 @@ new Vue({
                 <span v-html="svgpath"></span>
                 <p>Bubble</p>
                 <input type="radio" name="theme-group" id="bubble" value="bubble" @click="this.setTheme">
+            </div>
+            <div class="item">
+                <span><i class="fas fa-water"></i></span>
+                <p>Waves</p>
+                <input type="radio" name="theme-group" id="Waves" value="Waves" @click="this.setTheme">
             </div>
             <div class="item">
                 <span><i class="far fa-image"></i></span>
@@ -354,5 +382,189 @@ new Vue({
         
     </div>`,
     
+    
+})
+
+new Vue({
+    el:'todo',
+    data:{
+        display: true,
+        todos: JSON.parse(localStorage.getItem('itemsArray'))
+        
+    },
+    mounted() {
+        this.ArrayToJson()
+        if (this.todos === null){
+            this.todos = []
+        }
+    
+    },
+    methods:{
+        openPopup(){
+            var self = this
+
+            new swal({
+                title: 'Add Todo',
+                html:
+                  `<input type="text" id="swal-input1" class="swal2-input" placeholder="Name">
+                    <input type="date" id="swal-input2" name="" id="" class="swal2-input">
+                    <span>
+                    <label for="swal-input3" >Important</label>
+                    <input type="checkbox" id="swal-input3" name="" id="" class="swal2-input">
+                    </span>
+                    `,
+                preConfirm: function () {
+                  return new Promise(function (resolve) {
+                    resolve([
+                      $('#swal-input1').val(),
+                      $('#swal-input2').val()
+                    ])
+                  })
+                },
+                onOpen: function () {
+                  $('#swal-input1').focus()
+                }
+              }).then(function (result) {
+
+                var oldItems = JSON.parse(localStorage.getItem('itemsArray')) || [];
+
+                if(document.querySelector("#swal-input3").checked){
+                    var setImportant = true
+                } else {
+                    var setImportant = false
+                }
+
+                var newItem = 
+                {
+                'name': result.value[0],
+                'dueDate': result.value[1],
+                'important': setImportant
+                };
+
+                oldItems.push(newItem);
+                self.todos = oldItems
+                localStorage.setItem('itemsArray', JSON.stringify(oldItems));
+              })
+        },
+        ArrayToJson(){
+            JSON.parse(this.todos)
+        },
+        ArrayToStorage(){
+            localStorage.setItem("itemsArray", JSON.stringify(this.todos) )
+        },
+        deleteItem(item){
+
+            var self = this
+
+            var olditems = JSON.parse(localStorage.getItem('itemsArray')) || []
+            console.log(item)
+            $.each(olditems, function (indexInArray, valueOfElement) { 
+                if (item === valueOfElement.name){
+                    olditems.splice(indexInArray, 1)
+                    console.log('delete this ' + item)
+                    self.todos = olditems
+                    self.ArrayToStorage()
+                }
+            });
+        },
+        isImportant(item){
+            if (item){
+                return '<i class="fas fa-exclamation"></i>'
+            } else {
+                return ''
+            }
+        },
+        compareDates(){
+            debugger
+            var today = new Date();
+            console.log(today)
+        },
+        fullscreen(){
+            $("#todos").toggleClass("active");
+        }
+
+    },
+    template:`
+    <div id="todos">
+        
+        <div class="todos">
+            
+            <div class="todo" v-for="items in todos">
+                <i @click="deleteItem(items.name)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Item"></i>
+                <a>
+                <span>
+                    <p class="name">{{items.name}}</p>
+                    <p>{{items.dueDate}}</p>
+                </span>
+                    <p v-html="isImportant(items.important)" class="important"></p>
+                </a>
+            </div>
+            <i @click="fullscreen" class="fas fa-expand-alt"></i>
+            <div class="add-item" @click="openPopup">
+                Add Item
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        
+    </div>`,
+    
+    
+})
+
+new Vue({
+    el: 'weather',
+    data:{
+        display: true,
+        longitude: null,
+        latitude: null,
+        data: null
+
+    },
+    mounted () {
+        this.getLocation()
+    },
+    methods:{
+        getLocation() {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(this.showPosition);
+            }
+        },
+        showPosition(position) {
+            this.latitude = position.coords.latitude
+            this.longitude = position.coords.longitude
+          
+            var self = this
+            console.log("https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric")
+            $.ajax({
+                url: "https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric",
+                context: document.body
+            }).done(function(content) {
+
+                self.data = content
+                localStorage.setItem("location", content.name)
+        
+            });
+        },
+        returnImg(img){
+            return "http://openweathermap.org/img/wn/" + img + ".png"
+        },
+        truncNum(num){
+            return Math.trunc(num) + "°C";
+        }
+    },
+    template:`
+    <div id="weather">
+        <p class="title">{{data.name}}</p>
+        <p class="description">{{data.weather[0].description}}</p>
+        <span class="temp">
+            {{truncNum(data.main.temp)}}
+            <img :src="returnImg(data.weather[0].icon)">
+        </span>
+        <span class="hi-low">
+            <p>Lows of {{truncNum(data.main.temp_min)}}</p>
+            <p>Highs of {{truncNum(data.main.temp_max)}}</p>
+        </span>
+        <p class="humidity">Humidity: {{data.main.humidity}}%</p>
+    </div>`,
     
 })

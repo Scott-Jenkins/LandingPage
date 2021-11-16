@@ -171,7 +171,7 @@ function getATColour(){
     } else
     {
         $("#AT-Color").attr("value", AT)
-        $("html body span").css("color", AT)
+        $("#introduction span").css("color", AT)
         $("#Category-Option").css("border-color", AT)
         $("#todo .header").css("border-color", AT)
         //$("*").css("border-color", AT)

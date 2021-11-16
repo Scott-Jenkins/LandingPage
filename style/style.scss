@@ -6,6 +6,7 @@ $shadow: 0px 2px 15px 0px #80808026;
     --background:#333;
 }
 html{
+    //transform: skew(339deg, 352deg);
     /*
     box-shadow: inset 0px 0px 40px 6px rgba(15,15,15,0.64) ;
     height: 100%;
@@ -26,6 +27,9 @@ html{
         //font-family: monospace;
         font-size:42px;
 
+        //transform: scale(0.7);
+        //box-shadow: 0 30px 3.3vw #6c6c6c59;
+
         .section{
             position: relative;
         }
@@ -36,13 +40,6 @@ html{
 
         p{
             margin: 0;
-        }
-
-        #weather-area{
-            margin-bottom:20px;
-            img{
-                filter: drop-shadow(2px 2px 5px #80808049);
-            }
         }
 
         #name{
@@ -60,8 +57,6 @@ html{
             border-radius: 50px;
             padding: 50px;
         }
-
-
         #color-settings{
             font-size: 20px;
             z-index: 100;
@@ -124,7 +119,7 @@ html{
 
                     text-decoration: none;
                     height: 100%;
-                    border-radius: 10px;
+                    border-radius: 14px;
                     background: #ffffff;
                     border: none;
                     box-shadow: $shadow;
@@ -167,6 +162,12 @@ html{
             font-size: 24px;
         }
 
+        .todo-title{
+            border-bottom: 3px solid var(--accent);
+            font-size: 24px;
+            margin-top: 24px;
+        }
+
         #google-area{
             position: relative;
             
@@ -176,7 +177,7 @@ html{
                 border-radius: 40px;
                 padding: 4px 24px;
                 width: 100%;
-                margin-top: 80px;
+                margin-top: 0;
                 box-shadow: $shadow;
                 
             }
@@ -370,6 +371,7 @@ html{
                         i, svg{
                             max-width: 50px;
                             height: auto;
+                            color: var(--accent);
                         }
 
                     }
@@ -401,10 +403,10 @@ html{
         #bookmarks{
             .bookmarks{
                 display: grid;
-                grid-template-columns: repeat(4, 25%);
+                grid-template-columns: repeat(8, auto);
 
                 @media (max-width:1000px){
-                    grid-template-columns: repeat(3, 33%);
+                    grid-template-columns: repeat(4, auto);
                 }
 
                 .add-bookmark{
@@ -489,6 +491,15 @@ html{
             position: fixed !important;
         }
 
+        #defaultCanvas0{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            opacity: 0.2;
+            z-index: -10;
+        }
+
         #bgImage{
             position: fixed;
             z-index: 0;
@@ -500,113 +511,104 @@ html{
             object-fit: cover;
         }
 
-        #todo{
-            background: #ffffff08;
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: $shadow;
-
-            .header{
-                display: flex;
-                align-items: center;
-                padding: 20px;
-                border-bottom: 3px solid black;
-                justify-content: space-between;
-                font-size: 24px;
-                cursor: pointer;
-                
+        #todos{
+            &.active{
+                width: calc(100vw - 68px);
+                height: 100%;
+                position: fixed;
+                top: 0;
+                right: 0;
+                background: var(--background);
+                transition: 0.2s;
             }
 
-            .newItem{
-                
-
-                .item-row{
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    align-items: center;
-                    width: 100%;
-                    font-size: 16px;
-                    padding: 10px 20px;
-
-                    input{
-                        background:none;
-                        border: none;
-                        padding: 10px;
-
-                        &.item-important{
-                            margin: 10px;
-                        }
-
-                        &.item-name{
-                            min-width: 50px;
-                        }
-
-                        &.item-dueDate{
-                            min-width: 150px;
-                            
-                        }
-
-                        &.item-done{
-                            margin-right: 10px;
-                        }
-                    }
-
-                }
-
-                
-            }
-
-            .list-area{
-
-                .item-row{
-                    font-size: 14px;
-                    display: flex;
-                    justify-content: space-between;
-                    flex-direction:column;
-                    align-content: center;
-                    align-items: flex-start;
-                    padding: 10px 20px;
+            .todos{
+                position: relative;
+                .todo{
                     position: relative;
-                    min-height: 62px;
 
-                    p{
-                        margin: 0;
+                    a{
+                        display: flex;
+                        flex-direction: row;
+                        font-size: 12px;
+                        justify-content: space-between;
+                        align-items: center;
+                        //width: calc(100% - 20px);
+                        padding: 12px 5px 12px 12px;
 
-                        &:nth-child(3){
-                            text-align: center;
-                            font-size: 32px;
-                            position: absolute;
-                            right: 60px;
+                        span{
+                            color: var(--font);
+
+                            .name{
+                                font-size: 14px;
+                            }
                         }
+                    }
 
-                        &:last-child{
-                            text-align: center;
-                            font-size: 32px;
-                            position: absolute;
-                            right: 20px;
-                            cursor: pointer;
+                    i{
+                        visibility: hidden;
+                        position: absolute;
+                        cursor: pointer;
+                        right: 0;
+                        top: 10px;
+                    }
+
+                    .important{
+                        i{
+                            font-size: 22px !important;
+                            visibility: visible;
+                            right: 22px;
+                            top: 16px;
                         }
+                    }
 
-                        &:first-child{
-                            font-weight: 500;
+                    &:hover{
+                        i{
+                            visibility: visible;
+                            font-size: 14px;
                         }
                     }
                 }
+
+                .add-item{
+                    font-size: 14px;
+                    cursor: pointer;
+                    text-align: right;
+                    padding: 10px 20px;
+
+                    i{
+                        padding-left: 5px;
+                    }
+                }
+            }
+        }
+
+        #weather{
+            .title{
+                font-size: 42px;
             }
 
-            .clear-list{
-                display: flex;
-                align-items: center;
-                padding: 20px;
-                border-top: 3px solid var(--accent);
-                justify-content: flex-end;
-                font-size: 16px;
-                cursor: pointer;
+            .description{
+                font-size: 24px;
+                text-transform: capitalize;
+            }
 
-                i{
-                    margin-left:20px;
+            .temp{
+                color: var(--font);
+                font-size: 32px;
+                position: relative;
+                //padding-right: 40px;
+
+                img{
+                    position: absolute;
+                    right: 64px;
+                    top: -10px;
                 }
+            }
+
+            .hi-low, .humidity{
+                color: var(--font);
+                font-size: 16px;
             }
         }
 
@@ -636,7 +638,21 @@ html{
             }
         }
         
+        #swal2-html-container{
+            display: flex !important;
+            flex-direction: column;
 
+            span{
+                color: #595959 !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                input{
+                    margin-top: 0;
+                }
+            }
+        }
     }
 
 
