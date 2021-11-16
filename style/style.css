@@ -595,6 +595,20 @@ html #todos.active {
   transition: 0.2s;
 }
 
+html #todos.active .todos {
+  width: 80%;
+  margin: 10% auto;
+  border-left: 1px solid var(--accent);
+}
+
+html #todos.active .todos .todo a span .name {
+  font-size: 18px;
+}
+
+html #todos.active .todos .fa-expand-alt {
+  font-size: 26px;
+}
+
 html #todos .todos {
   position: relative;
 }
@@ -658,6 +672,15 @@ html #todos .todos .add-item {
 
 html #todos .todos .add-item i {
   padding-left: 5px;
+}
+
+html #todos .todos .fa-expand-alt {
+  position: absolute;
+  left: 12px;
+  font-size: 22px;
+  z-index: 100;
+  bottom: 12px;
+  cursor: pointer;
 }
 
 html #weather .title {
