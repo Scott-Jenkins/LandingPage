@@ -12,6 +12,10 @@ new Vue({
                 'news':{
                     class : 'far fa-newspaper',
                     link: 'https://www.google.co.uk/'
+                },
+                'spotify':{
+                    class: 'fab fa-spotify',
+                    link: '/'
                 }
             }
         
@@ -568,3 +572,5 @@ new Vue({
     </div>`,
     
 })
+
+

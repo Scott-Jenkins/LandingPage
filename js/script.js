@@ -175,7 +175,6 @@ function callNews(category){
 
     $.ajax({
         url: Url,
-        context: document.body
     }).done(function(content) {
 
 
