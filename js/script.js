@@ -167,16 +167,12 @@ function callNews(category){
     var APIKEY = "ef57e1e514c34b3ea37e2f0e40bd41dd"
     var Url = "https://newsapi.org/v2/top-headlines?country=us&category=" + category + "&sortBy=popularity&apiKey=" + APIKEY
 
-    //var APIKEY = 'qg72bVljFFc_839SxC3mvDgeDURX3TLueNYUyuk0Gqv_qxb_'
-    //var Url = 'http://api.currentsapi.services/v1/category="' + category + '"'
-
     var newsArea = $("#news")
     $(newsArea).html("");
 
     $.ajax({
         url: Url,
     }).done(function(content) {
-
 
         for (let i = 0; i < 8; i++) {
             

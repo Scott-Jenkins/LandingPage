@@ -24,7 +24,9 @@ new Vue({
         console.log(this.sidebar)
     },
     methods:{
-        
+        profilePic(){
+            return 'https://eu.ui-avatars.com/api/?rounded=true&name=' + localStorage.getItem("name")
+        }
 
     },
     template:`
@@ -35,6 +37,7 @@ new Vue({
         </div>
         <div class="settings">
             <i class="fas fa-cog" onclick="openSettings()"></i>
+            <img :src="profilePic()" class="profile">
         </div>
     </div>`,
     
@@ -574,3 +577,54 @@ new Vue({
 })
 
 
+new Vue({
+    el:'news',
+    data:{
+        display: true,
+        items: null,
+        settings: {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://webit-news-search.p.rapidapi.com/trending?language=en",
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "webit-news-search.p.rapidapi.com",
+                "x-rapidapi-key": "b11910c071msh3ea041eaa90af26p14f827jsn36ddcc0c9d92"
+            }
+        }
+        
+    },
+    mounted () {
+        console.clear()
+        this.getItems()
+    },
+    methods:{
+        getItems(){
+            var self = this
+            $.ajax(this.settings).done(function (response) {
+                console.log(response);
+                self.items = response.data.results;
+            });
+        }
+    },
+    template:`
+    <div id="news">
+            <div class="grid-item" v-for="item in items">
+                <a :href="item.url" target="_blank">
+                    <div class="card">
+                        <img :src="item.image" alt="">
+                        <div class="bottom">
+                            <p class="title">
+                                {{item.title}}
+                            </p>
+                            <div class="source">
+                                {{item.source_name}}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+    </div>`,
+    
+    
+})

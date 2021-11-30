@@ -16,6 +16,7 @@ html{
         @media (max-width : 900px) {
             margin-left: 50px;
         }
+
     }
 
     body{
@@ -32,6 +33,16 @@ html{
 
         .section{
             position: relative;
+
+            .container{
+                @media (min-width:1000px) {
+                    width: 90%;
+                }
+
+                @media (min-width:1920px) {
+                    max-width: 80%;
+                }
+            }
         }
     
         span{
@@ -126,7 +137,9 @@ html{
 
                     img{
                         border-radius: 10px;
-                        width:100%
+                        width:100%;
+                        object-fit: cover;
+                        max-height: 250px;
                     }
     
                     .bottom{
@@ -170,6 +183,7 @@ html{
 
         #google-area{
             position: relative;
+            margin-bottom: 10px;
             
             #google-search{
                 font-size: 24px;
@@ -311,6 +325,11 @@ html{
                     &:hover:after {
                         width: 100%;
                     }
+                }
+
+                .profile{
+                    width:100%;
+                    padding:6px;
                 }
 
             }
@@ -681,9 +700,68 @@ html{
                 }
             }
         }
+
+        
+
+        
     }
 
+    html div[class^="col-"]{
+        margin-bottom: 10px;
+    }
 
+    @keyframes bouncing-loader {
+        to {
+          opacity: 0.1;
+          transform: translate3d(0, -16px, 0);
+        }
+    }
+
+    @keyframes disappear {
+        to {
+          opacity: 0.0;
+          display: none;
+          z-index: -10;
+        }
+    }
+
+    #loading{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--background);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation-delay: 2s;
+        animation-iteration-count: 1;
+        animation: disappear forwards ease-in-out  3.5s;
+
+        .bouncing-loader {
+            display: flex;
+            justify-content: center;
+          }
+          
+          .bouncing-loader > div {
+            width: 16px;
+            height: 16px;
+            margin: 3rem 0.2rem;
+            background: var(--font);
+            border-radius: 50%;
+            animation: bouncing-loader 0.6s infinite alternate;
+          }
+          
+          .bouncing-loader > div:nth-child(2) {
+            animation-delay: 0.2s;
+          }
+          
+          .bouncing-loader > div:nth-child(3) {
+            animation-delay: 0.4s;
+          }
+    }
 
 /*
 body::before {

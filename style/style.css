@@ -35,6 +35,18 @@ html body .section {
   position: relative;
 }
 
+@media (min-width: 1000px) {
+  html body .section .container {
+    width: 90%;
+  }
+}
+
+@media (min-width: 1920px) {
+  html body .section .container {
+    max-width: 80%;
+  }
+}
+
 html body span {
   color: lime;
 }
@@ -145,6 +157,9 @@ html body #news .grid-item .card {
 html body #news .grid-item .card img {
   border-radius: 10px;
   width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  max-height: 250px;
 }
 
 html body #news .grid-item .card .bottom {
@@ -192,6 +207,7 @@ html .todo-title {
 
 html #google-area {
   position: relative;
+  margin-bottom: 10px;
 }
 
 html #google-area #google-search {
@@ -348,6 +364,11 @@ html #sidebar .settings i:after {
 
 html #sidebar .settings i:hover:after {
   width: 100%;
+}
+
+html #sidebar .settings .profile {
+  width: 100%;
+  padding: 6px;
 }
 
 html #settingsmenu {
@@ -774,6 +795,96 @@ html #swal2-html-container span {
 
 html #swal2-html-container span input {
   margin-top: 0;
+}
+
+html div[class^="col-"] {
+  margin-bottom: 10px;
+}
+
+@-webkit-keyframes bouncing-loader {
+  to {
+    opacity: 0.1;
+    -webkit-transform: translate3d(0, -16px, 0);
+            transform: translate3d(0, -16px, 0);
+  }
+}
+
+@keyframes bouncing-loader {
+  to {
+    opacity: 0.1;
+    -webkit-transform: translate3d(0, -16px, 0);
+            transform: translate3d(0, -16px, 0);
+  }
+}
+
+@-webkit-keyframes disappear {
+  to {
+    opacity: 0.0;
+    display: none;
+    z-index: -10;
+  }
+}
+
+@keyframes disappear {
+  to {
+    opacity: 0.0;
+    display: none;
+    z-index: -10;
+  }
+}
+
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--background);
+  z-index: 1000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation: disappear forwards ease-in-out  3.5s;
+          animation: disappear forwards ease-in-out  3.5s;
+}
+
+#loading .bouncing-loader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#loading .bouncing-loader > div {
+  width: 16px;
+  height: 16px;
+  margin: 3rem 0.2rem;
+  background: var(--font);
+  border-radius: 50%;
+  -webkit-animation: bouncing-loader 0.6s infinite alternate;
+          animation: bouncing-loader 0.6s infinite alternate;
+}
+
+#loading .bouncing-loader > div:nth-child(2) {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s;
+}
+
+#loading .bouncing-loader > div:nth-child(3) {
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s;
 }
 
 /*
