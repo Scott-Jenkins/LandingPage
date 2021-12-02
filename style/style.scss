@@ -124,7 +124,9 @@ html{
                     transition: 0.2s;
 
                 }
-                
+                a,a:visited{
+                    color: #333;
+                }
 
                 .card{
 
@@ -291,6 +293,11 @@ html{
                     }
                     &:hover:after {
                         width: 100%;
+                    }
+
+                    .preview{
+                        position: absolute;
+                        left:50px;
                     }
                 }
             }
@@ -623,7 +630,7 @@ html{
                     position: absolute;
                     left: 12px;
                     font-size: 22px;
-                    z-index: 100;
+                    z-index: 80;
                     bottom: 12px;
                     cursor: pointer;
                 }
@@ -736,13 +743,16 @@ html{
         display: flex;
         align-items: center;
         justify-content: center;
-        animation-delay: 2s;
+        
         animation-iteration-count: 1;
-        animation: disappear forwards ease-in-out  3.5s;
+        //animation-delay: 12s;
+        animation: disappear forwards ease-in-out 0.5s;
+        animation-delay: 1.5s;
 
         .bouncing-loader {
             display: flex;
             justify-content: center;
+            animation: disappear forwards ease-in-out  1.5s;
           }
           
           .bouncing-loader > div {
@@ -752,6 +762,7 @@ html{
             background: var(--font);
             border-radius: 50%;
             animation: bouncing-loader 0.6s infinite alternate;
+            animation-delay: 0.1s;
           }
           
           .bouncing-loader > div:nth-child(2) {
@@ -759,7 +770,7 @@ html{
           }
           
           .bouncing-loader > div:nth-child(3) {
-            animation-delay: 0.4s;
+            animation-delay: 0.3s;
           }
     }
 

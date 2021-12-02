@@ -1,7 +1,7 @@
 new Vue({
     el:'sidebar',
     data:{
-        display: true,
+        display: false,
         items: null,
         sidebar: 
             {
@@ -15,7 +15,7 @@ new Vue({
                 },
                 'spotify':{
                     class: 'fab fa-spotify',
-                    link: '/'
+                    link: 'https://open.spotify.com/'
                 }
             }
         
@@ -32,7 +32,8 @@ new Vue({
     template:`
     <div id="sidebar">
         <div class="options">
-            <a class="option" v-for="options in sidebar" :class="options.class" :href="options.link">
+            <a class="option" v-for="options in sidebar" :src="options.link">
+                <i :class="options.class"></i>
             </a>
         </div>
         <div class="settings">
@@ -595,8 +596,18 @@ new Vue({
         
     },
     mounted () {
-        console.clear()
-        this.getItems()
+        console.clear();
+        this.getItems();
+
+        var counter = 0;
+		$("#news .grid-item").each(function (index, element) {
+            counter += 1;
+            debugger
+
+            if (counter > 1)[
+                alert("hi")
+            ]
+        });
     },
     methods:{
         getItems(){
@@ -605,7 +616,7 @@ new Vue({
                 console.log(response);
                 self.items = response.data.results;
             });
-        }
+        },
     },
     template:`
     <div id="news">

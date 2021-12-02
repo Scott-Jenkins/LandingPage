@@ -152,47 +152,7 @@ function setATColour(){
 }
 ATColor.addEventListener('blur', setATColour)
 
-var categoryOption = $("#Category-Option")
-$(categoryOption).val(localStorage.getItem("News-Category"))
 
-
-$(categoryOption).change(function (e) { 
-    callNews(categoryOption.val())
-    localStorage.setItem("News-Category", categoryOption.val())
-});
-
-callNews(localStorage.getItem("News-Category"))
-function callNews(category){
-
-    var APIKEY = "ef57e1e514c34b3ea37e2f0e40bd41dd"
-    var Url = "https://newsapi.org/v2/top-headlines?country=us&category=" + category + "&sortBy=popularity&apiKey=" + APIKEY
-
-    var newsArea = $("#news")
-    $(newsArea).html("");
-
-    $.ajax({
-        url: Url,
-    }).done(function(content) {
-
-        for (let i = 0; i < 8; i++) {
-            
-            var Title = content.articles[i].title
-            var Link = content.articles[i].url
-            var Image = content.articles[i].urlToImage
-            var Source = content.articles[i].source.name
-
-            
-
-            var article = document.createElement("div")
-            article.className = "grid-item"
-            article.innerHTML = '<a href="'+Link+'"><div class="card"><img src="'+Image+'" alt=""><div class="bottom"><p class="title">'+Title+'</p><p class="source">'+Source+'</p></div></div></a>'
-            
-            newsArea.append(article)
-
-        }
-
-    });
-}
 
 $(".fa-search").click(function (e) { 
     

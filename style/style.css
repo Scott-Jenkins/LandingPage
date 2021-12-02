@@ -144,6 +144,10 @@ html body #news .grid-item:hover {
   transition: 0.2s;
 }
 
+html body #news .grid-item a, html body #news .grid-item a:visited {
+  color: #333;
+}
+
 html body #news .grid-item .card {
   text-decoration: none;
   height: 100%;
@@ -322,6 +326,11 @@ html #sidebar .options .option:after {
 
 html #sidebar .options .option:hover:after {
   width: 100%;
+}
+
+html #sidebar .options .option .preview {
+  position: absolute;
+  left: 50px;
 }
 
 html #sidebar .settings {
@@ -699,7 +708,7 @@ html #todos .todos .fa-expand-alt {
   position: absolute;
   left: 12px;
   font-size: 22px;
-  z-index: 100;
+  z-index: 80;
   bottom: 12px;
   cursor: pointer;
 }
@@ -850,12 +859,12 @@ html div[class^="col-"] {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-animation-delay: 2s;
-          animation-delay: 2s;
   -webkit-animation-iteration-count: 1;
           animation-iteration-count: 1;
-  -webkit-animation: disappear forwards ease-in-out  3.5s;
-          animation: disappear forwards ease-in-out  3.5s;
+  -webkit-animation: disappear forwards ease-in-out 0.5s;
+          animation: disappear forwards ease-in-out 0.5s;
+  -webkit-animation-delay: 1.5s;
+          animation-delay: 1.5s;
 }
 
 #loading .bouncing-loader {
@@ -865,6 +874,8 @@ html div[class^="col-"] {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-animation: disappear forwards ease-in-out  1.5s;
+          animation: disappear forwards ease-in-out  1.5s;
 }
 
 #loading .bouncing-loader > div {
@@ -875,6 +886,8 @@ html div[class^="col-"] {
   border-radius: 50%;
   -webkit-animation: bouncing-loader 0.6s infinite alternate;
           animation: bouncing-loader 0.6s infinite alternate;
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s;
 }
 
 #loading .bouncing-loader > div:nth-child(2) {
@@ -883,8 +896,8 @@ html div[class^="col-"] {
 }
 
 #loading .bouncing-loader > div:nth-child(3) {
-  -webkit-animation-delay: 0.4s;
-          animation-delay: 0.4s;
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s;
 }
 
 /*
