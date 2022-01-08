@@ -27,6 +27,7 @@ html body {
   margin: 1%;
   background: #002b36;
   color: #eee8d5;
+  text-shadow: 0 0 0.1vw #ffffff59;
   font-size: 42px;
 }
 
