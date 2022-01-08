@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        
+    </head>
+    <div id="ambient" style="overflow:hidden; position:absolute; width:100%; height:100vh;"></div>
+    <img src="" alt="" id="bgImage">
+    <div id="loading">
+        <div class="bouncing-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    
+    <body>
+        <sidebar></sidebar>
+        <settingsmenu></settingsmenu>
+        <main>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <input type="text" id="name">
+                        <p id="introduction"></p>
+                    </div>
+                    <div class="col-sm-5 text-right">
+                        <weather></weather>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="google-area">
+                            <input type="text" name="" id="google-search" placeholder="Google Search">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <bookmarks></bookmarks>
+                    </div>
+                    <div class="col-md-5">
+                        <p class="todo-title">News</p>
+                        <news></news>
+                    </div>
+                    <div class="col-md-7">
+                        <p class="todo-title">To-Do List</p>
+                        <todo></todo>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </main>
+
+        <script src="https://kit.fontawesome.com/c4bce42dd5.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/4.0.9/scrollreveal.min.js" referrerpolicy="no-referrer"></script>
+        <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script src="js/ToDoList.js"></script>
+  <script src="js/components.js"></script>
+        <script src="js/animeBG.js"></script>
+        <script src="js/script.js" async defer></script>
+        <script src="js/spotify.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        </script>
+        
+    </body>
+</html>
+
