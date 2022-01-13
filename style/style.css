@@ -25,9 +25,8 @@ html main {
 html body {
   padding: 0;
   margin: 1%;
-  background: #002b36;
+  background: var(--background);
   color: #eee8d5;
-  text-shadow: 0 0 0.3vw #ffffff59;
   font-size: 42px;
 }
 
@@ -45,10 +44,6 @@ html body .section {
   html body .section .container {
     max-width: 80%;
   }
-}
-
-html body span {
-  color: lime;
 }
 
 html body p {
@@ -123,13 +118,12 @@ html body #news {
   -ms-grid-columns: (1fr)[2];
       grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
-}
-
-@media (max-width: 1200px) {
-  html body #news {
-    -ms-grid-columns: (1fr)[1];
-        grid-template-columns: repeat(1, 1fr);
-  }
+  margin-top: 18px;
+  /*
+            @media (max-width:1200px) {
+                grid-template-columns: repeat(1,1fr);
+            }
+            */
 }
 
 html body #news .grid-item {
@@ -164,6 +158,8 @@ html body #news .grid-item .card img {
   -o-object-fit: cover;
      object-fit: cover;
   max-height: 250px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
 html body #news .grid-item .card .bottom {
@@ -190,6 +186,22 @@ html body #news .grid-item .card .source {
   font-size: 16px;
   font-weight: bold;
   margin: 0;
+}
+
+html body .extend {
+  display: none;
+}
+
+html body a.show-more {
+  color: var(--font);
+  border: 1px solid var(--font);
+  grid-column: span 2;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  border-radius: 10px;
+  padding: 10px 30px;
+  margin: auto;
 }
 
 html #Category-Option {
@@ -395,8 +407,6 @@ html #settingsmenu {
 html #settingsmenu.active {
   visibility: visible;
   width: calc(100vw - 50px);
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
 }
 
 html #settingsmenu h2 {
@@ -688,6 +698,14 @@ html #todos .todos .todo .important i {
   top: 16px;
 }
 
+html #todos .todos .todo .overdue {
+  font-size: 22px !important;
+  visibility: visible;
+  right: 42px;
+  top: 16px;
+  color: red;
+}
+
 html #todos .todos .todo:hover i {
   visibility: visible;
   font-size: 14px;
@@ -898,6 +916,11 @@ html div[class^="col-"] {
 #loading .bouncing-loader > div:nth-child(3) {
   -webkit-animation-delay: 0.3s;
           animation-delay: 0.3s;
+}
+
+.swal2-confirm.swal2-styled {
+  background: var(--background) !important;
+  color: var(--font) !important;
 }
 
 /*

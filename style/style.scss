@@ -22,9 +22,9 @@ html{
     body{
         padding: 0;
         margin: 1%;
-        background: #002b36;
+        background: var(--background);
         color: #eee8d5;
-        text-shadow: 0 0 0.3vw #ffffff59;
+        //text-shadow: 0 0 0.3vw #ffffff59;
         //font-family: monospace;
         font-size:42px;
 
@@ -45,9 +45,7 @@ html{
             }
         }
     
-        span{
-            color: lime;
-        }
+
 
         p{
             margin: 0;
@@ -110,10 +108,13 @@ html{
             width: 100%;
             grid-template-columns: repeat(2,1fr);
             grid-gap: 20px;
+            margin-top: 18px;
 
+            /*
             @media (max-width:1200px) {
                 grid-template-columns: repeat(1,1fr);
             }
+            */
 
             .grid-item{
                 max-width: 100%;
@@ -142,6 +143,8 @@ html{
                         width:100%;
                         object-fit: cover;
                         max-height: 250px;
+                        border-bottom-left-radius:0px;
+                        border-bottom-right-radius:0px;
                     }
     
                     .bottom{
@@ -164,6 +167,19 @@ html{
                     }
                 }
             }  
+
+            .extend{
+                display: none;
+            }
+            a.show-more{
+                color: var(--font);
+                border: 1px solid var(--font);
+                grid-column: span 2;
+                width: max-content;
+                border-radius: 10px;
+                padding: 10px 30px;
+                margin: auto;
+            }
         }
 
         #Category-Option{
@@ -356,7 +372,11 @@ html{
             &.active{
                 visibility: visible;
                 width: calc(100vw - 50px);
-                transition: 0.2s;
+                //transition: 0.2s;
+
+                *{
+                    //transition: 0.6s;
+                }
             }
 
             h2{
@@ -430,6 +450,7 @@ html{
             .bookmarks{
                 display: grid;
                 grid-template-columns: repeat(8, auto);
+                
 
                 @media (max-width:1000px){
                     grid-template-columns: repeat(4, auto);
@@ -607,6 +628,14 @@ html{
                         }
                     }
 
+                    .overdue{
+                        font-size: 22px !important;
+                            visibility: visible;
+                            right: 42px;
+                            top: 16px;
+                            color:red;
+                    }
+
                     &:hover{
                         i{
                             visibility: visible;
@@ -772,6 +801,11 @@ html{
           .bouncing-loader > div:nth-child(3) {
             animation-delay: 0.3s;
           }
+    }
+
+    .swal2-confirm.swal2-styled{
+        background: var(--background) !important;
+        color: var(--font) !important;
     }
 
 /*

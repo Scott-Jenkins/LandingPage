@@ -1,3 +1,10 @@
+canEdit("true")
+
+$(function () {
+    $(".fa-edit").click(function (e) { 
+        canEdit("false")
+    });
+});
 new Vue({
     el:'sidebar',
     data:{
@@ -13,9 +20,8 @@ new Vue({
                     class : 'far fa-newspaper',
                     link: 'https://www.google.co.uk/'
                 },
-                'spotify':{
-                    class: 'fab fa-spotify',
-                    link: 'https://open.spotify.com/'
+                'edit':{
+                    class: 'far fa-edit',
                 }
             }
         
@@ -123,32 +129,8 @@ new Vue({
     },
     mounted () {
         this.checkTheme()
-        //this.eachTheme()
     },
     methods:{
-        //eachTheme(){
-        //     var self = this
-        //     $("#theme .item").each(function (index, element) {
-                
-                
-        //         $(this).click(function (e) { 
-        //             $("#theme .item").removeClass("active");
-        //             $(this).toggleClass("active");
-
-        //             $("#theme .item input:radio").removeAttr("checked");
-        //             $("input:radio", this).attr("checked", "true")
-        //             self.setTheme()
-
-        //         });
-
-        //         if($("input:radio", this).attr("checked", "true")){
-        //             $("#theme .item").removeClass("active");
-        //             $("#theme .item input:radio").removeAttr("checked");
-        //             $("input:radio", this).attr("checked", "true");
-        //             $(this).toggleClass("active");
-        //         }
-        //     });
-        // },
 
         checkTheme(){
             if (this.themeType === null){
@@ -156,51 +138,58 @@ new Vue({
             }
             switch(this.themeType) {
                 case 'bubble':
-                  $("#ambient").fadeIn('slow');
-                  $("#bubble").attr("checked", "true")
+                $("#ambient").fadeIn('slow');
+                $("#bubble").attr("checked", "true")
 
-                  $("#none").removeAttr("checked");
-                  $("#image").removeAttr("checked");
-                  $("#Waves").removeAttr("checked");
-                  $("#bgImage").hide();
-                  $("#defaultCanvas0").hide();
-                  
-                  break;
+                $("#none").removeAttr("checked");
+                $("#image").removeAttr("checked");
+                $("#Waves").removeAttr("checked");
+                $("#bgImage").hide();
+                $("#defaultCanvas0").hide();
+                
+                break;
                 case 'Waves':
-                  $("#Waves").attr("checked", "true")
-                  $("#defaultCanvas0").fadeIn('slow');
-                  
-                  $("#none").removeAttr("checked");
-                  $("#image").removeAttr("checked");
-                  $("#bubble").removeAttr("checked");
-                  $("#bgImage").hide();
-                  $("#ambient").hide();
+                $("#Waves").attr("checked", "true")
+                setTimeout(function(){
+                    $("#defaultCanvas0").fadeIn('slow');
                     
-                  break;
+                }, 1800);
+                
+                $(":root").css("--background", "black")
+                $(":root").css("--font", "white")
+                $(":root").css("--accent", "#00B819")
+                $("#none").removeAttr("checked");
+                $("#image").removeAttr("checked");
+                $("#bubble").removeAttr("checked");
+                $("#bgImage").hide();
+                $("#ambient").hide();
+                    
+                break;
                 case 'image':
-                  $("#ambient").hide();
-                  $("#image").attr("checked", "true")
-                  $("#bgImage").fadeIn('slow');
-                  $("#bgImage").attr("src", atob(localStorage.getItem("bg-image")))
+                $("#ambient").hide();
+                $("#image").attr("checked", "true")
+                $("#bgImage").fadeIn('slow');
+                var image = atob(localStorage.getItem("bg-image"))
+                $("#bgImage").attr("src", image)
 
-                  $("#bubble").removeAttr("checked");
-                  $("#none").removeAttr("checked");
-                  $("#Waves").removeAttr("checked");
-                  $("#defaultCanvas0").hide();
-                  break; 
+                $("#bubble").removeAttr("checked");
+                $("#none").removeAttr("checked");
+                $("#Waves").removeAttr("checked");
+                $("#defaultCanvas0").hide();
+                break; 
 
                 case 'none':
-                  
-                  $("#none").attr("checked", "true")
+                
+                $("#none").attr("checked", "true")
 
-                  $("#bgImage").hide();
-                  $("#defaultCanvas0").hide();
-                  $("#ambient").hide();
+                $("#bgImage").hide();
+                $("#defaultCanvas0").hide();
+                $("#ambient").hide();
 
-                  $("#bubble").removeAttr("checked");
-                  $("#image").removeAttr("checked");
-                  $("#Waves").removeAttr("checked");
-                  break;
+                $("#bubble").removeAttr("checked");
+                $("#image").removeAttr("checked");
+                $("#Waves").removeAttr("checked");
+                break;
                 default:
             }
         },
@@ -228,11 +217,7 @@ new Vue({
             <div class="setting">
                 <label>Name:</label>
                 <p>{{localStorage.getItem("name")}}</p>
-            </div>
-            <div class="setting">
-                <label>Preffered News Category:</label>
-                <p>{{localStorage.getItem("News-Category")}}</p>
-            </div>     
+            </div>   
             <div class="setting">
                 <label>Location:</label>
                 <p>{{localStorage.getItem("location")}}</p>
@@ -249,8 +234,8 @@ new Vue({
                 <input type="radio" name="theme-group" id="bubble" value="bubble" @click="this.setTheme">
             </div>
             <div class="item">
-                <span><i class="fas fa-water"></i></span>
-                <p>Waves</p>
+                <span><i class="fas fa-barcode"></i></span>
+                <p>Matrix</p>
                 <input type="radio" name="theme-group" id="Waves" value="Waves" @click="this.setTheme">
             </div>
             <div class="item">
@@ -292,350 +277,405 @@ new Vue({
         
     </div>`,
 })
- 
 function openSettings() {
     $("#settingsmenu").toggleClass("active");
 }
 
-new Vue({
-    el:'bookmarks',
-    data:{
-        display: true,
-        bookmarks: JSON.parse(localStorage.getItem('bookmarks'))
-        
-    },
-    mounted () {
-        this.ArrayToJson()
-        if (this.bookmarks === null){
-            this.bookmarks = []
-        }
 
-        
-    },
-    methods:{
-        openPopup(){
-            
-            Swal.fire({
-                title: "Add a Bookmark",
-                text: "Please enter the URL:",
-                input: 'text',
-                showCancelButton: true        
-            }).then((result) => {
-                if (result.value) {
-                    var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
+function canEdit(answer){
+    if (answer == "true"){
+    
 
-                    var newBm = 
-                    {
-                    'url': result.value
-                    };
+    
+    
+    
 
-                    olditems.push(newBm)
-                    this.bookmarks = olditems
-                    this.ArrayToStorage()
+        new Vue({
+            el:'bookmarks',
+            data:{
+                display: true,
+                bookmarks: JSON.parse(localStorage.getItem('bookmarks'))
+                
+            },
+            mounted () {
+                this.ArrayToJson()
+                if (this.bookmarks === null){
+                    this.bookmarks = []
                 }
-            });
-        },
-        ArrayToJson(){
-            JSON.parse(this.bookmarks)
-        },
-        ArrayToStorage(){
-            localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks) )
-        },
-        fetchFavicon(url){
-            return 'http://icon.horse/icon/' +  url.replaceAll("https://", "");
-        },
-        shortenUrl(url){
-            return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('.')[0]
-        },
-        extendUrl(url){
-            if (url.includes("https://" || "http://") === false){
-                url = "https://" + url
-            }
-            return url
-        },
-        deleteBookmark(BMurl){
-
-            var self = this
-
-            var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
-            console.log(BMurl)
-            $.each(olditems, function (indexInArray, valueOfElement) { 
-                if (BMurl === valueOfElement.url){
-                    olditems.splice(indexInArray, 1)
-                    console.log('delete this ' + BMurl)
-                    self.bookmarks = olditems
-                    self.ArrayToStorage()
-                }
-            });
-        }
-
-    },
-    template:`
-    <div id="bookmarks">
-        
-        <div class="bookmarks">
-            
-            <div class="bookmark" v-for="items in bookmarks">
-                <i @click="deleteBookmark(items.url)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Bookmark"></i>
-                <a :href="extendUrl(items.url)" target="_blank">
-                    <img :src="fetchFavicon(items.url)">
-                    {{shortenUrl(items.url) }}
-                </a>
-            </div>
-            <div class="add-bookmark" @click="this.openPopup">
-                <i class="fas fa-plus" aria-hidden="true"></i>
-                Add Bookmark
-            </div>
-        </div>
-        
-    </div>`,
     
+                
+            },
+            methods:{
+                openPopup(){
+                    Swal.fire({
+                        title: "Add a Bookmark",
+                        text: "Please enter the URL:",
+                        input: 'text',
+                        showCancelButton: true        
+                    }).then((result) => {
+                        if (result.value) {
+                            var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
     
-})
-
-new Vue({
-    el:'todo',
-    data:{
-        display: true,
-        todos: JSON.parse(localStorage.getItem('itemsArray'))
-        
-    },
-    mounted() {
-        this.ArrayToJson()
-        if (this.todos === null){
-            this.todos = []
-        }
+                            var newBm = 
+                            {
+                            'url': result.value
+                            };
     
-    },
-    methods:{
-        openPopup(){
-            var self = this
-
-            new swal({
-                title: 'Add Todo',
-                html:
-                  `<input type="text" id="swal-input1" class="swal2-input" placeholder="Name">
-                    <input type="date" id="swal-input2" name="" id="" class="swal2-input">
-                    <span>
-                    <label for="swal-input3" >Important</label>
-                    <input type="checkbox" id="swal-input3" name="" id="" class="swal2-input">
-                    </span>
-                    `,
-                preConfirm: function () {
-                  return new Promise(function (resolve) {
-                    resolve([
-                      $('#swal-input1').val(),
-                      $('#swal-input2').val()
-                    ])
-                  })
+                            olditems.push(newBm)
+                            this.bookmarks = olditems
+                            this.ArrayToStorage()
+                        }
+                    });
                 },
-                onOpen: function () {
-                  $('#swal-input1').focus()
-                }
-              }).then(function (result) {
-
-                var oldItems = JSON.parse(localStorage.getItem('itemsArray')) || [];
-
-                if(document.querySelector("#swal-input3").checked){
-                    var setImportant = true
-                } else {
-                    var setImportant = false
-                }
-
-                var newItem = 
-                {
-                'name': result.value[0],
-                'dueDate': result.value[1],
-                'important': setImportant
-                };
-
-                oldItems.push(newItem);
-                self.todos = oldItems
-                localStorage.setItem('itemsArray', JSON.stringify(oldItems));
-              })
-        },
-        ArrayToJson(){
-            JSON.parse(this.todos)
-        },
-        ArrayToStorage(){
-            localStorage.setItem("itemsArray", JSON.stringify(this.todos) )
-        },
-        deleteItem(item){
-
-            var self = this
-
-            var olditems = JSON.parse(localStorage.getItem('itemsArray')) || []
-            console.log(item)
-            $.each(olditems, function (indexInArray, valueOfElement) { 
-                if (item === valueOfElement.name){
-                    olditems.splice(indexInArray, 1)
-                    console.log('delete this ' + item)
-                    self.todos = olditems
-                    self.ArrayToStorage()
-                }
-            });
-        },
-        isImportant(item){
-            if (item){
-                return '<i class="fas fa-exclamation"></i>'
-            } else {
-                return ''
-            }
-        },
-        compareDates(){
-            debugger
-            var today = new Date();
-            console.log(today)
-        },
-        fullscreen(){
-            $("#todos").toggleClass("active");
-        }
-
-    },
-    template:`
-    <div id="todos">
-        
-        <div class="todos">
-            
-            <div class="todo" v-for="items in todos">
-                <i @click="deleteItem(items.name)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Item"></i>
-                <a>
-                <span>
-                    <p class="name">{{items.name}}</p>
-                    <p>{{items.dueDate}}</p>
-                </span>
-                    <p v-html="isImportant(items.important)" class="important"></p>
-                </a>
-            </div>
-            <i @click="fullscreen" class="fas fa-expand-alt"></i>
-            <div class="add-item" @click="openPopup">
-                Add Item
-                <i class="fas fa-plus"></i>
-            </div>
-        </div>
-        
-    </div>`,
+                ArrayToJson(){
+                    JSON.parse(this.bookmarks)
+                },
+                ArrayToStorage(){
+                    localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks) )
+                },
+                fetchFavicon(url){
+                    return 'http://icon.horse/icon/' +  url.replaceAll("https://", "");
+                },
+                shortenUrl(url){
+                    return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('.')[0]
+                },
+                extendUrl(url){
+                    if (url.includes("https://" || "http://") === false){
+                        url = "https://" + url
+                    }
+                    return url
+                },
+                deleteBookmark(BMurl){
     
+                    var self = this
     
-})
-
-new Vue({
-    el: 'weather',
-    data:{
-        display: true,
-        longitude: null,
-        latitude: null,
-        data: null
-
-    },
-    mounted () {
-        this.getLocation()
-    },
-    methods:{
-        getLocation() {
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(this.showPosition);
-            }
-        },
-        showPosition(position) {
-            this.latitude = position.coords.latitude
-            this.longitude = position.coords.longitude
-          
-            var self = this
-            console.log("https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric")
-            $.ajax({
-                url: "https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric",
-                context: document.body
-            }).done(function(content) {
-
-                self.data = content
-                localStorage.setItem("location", content.name)
-        
-            });
-        },
-        returnImg(img){
-            return "http://openweathermap.org/img/wn/" + img + ".png"
-        },
-        truncNum(num){
-            return Math.trunc(num) + "°C";
-        }
-    },
-    template:`
-    <div id="weather">
-        <p class="title">{{data.name}}</p>
-        <p class="description">{{data.weather[0].description}}</p>
-        <span class="temp">
-            {{truncNum(data.main.temp)}}
-            <img :src="returnImg(data.weather[0].icon)">
-        </span>
-        <span class="hi-low">
-            <p>Lows of {{truncNum(data.main.temp_min)}}</p>
-            <p>Highs of {{truncNum(data.main.temp_max)}}</p>
-        </span>
-        <p class="humidity">Humidity: {{data.main.humidity}}%</p>
-    </div>`,
+                    var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
+                    console.log(BMurl)
+                    $.each(olditems, function (indexInArray, valueOfElement) { 
+                        if (BMurl === valueOfElement.url){
+                            olditems.splice(indexInArray, 1)
+                            console.log('delete this ' + BMurl)
+                            self.bookmarks = olditems
+                            self.ArrayToStorage()
+                        }
+                    });
+                }
     
-})
-
-
-new Vue({
-    el:'news',
-    data:{
-        display: true,
-        items: null,
-        settings: {
-            "async": true,
-            "crossDomain": true,
-            "url": "https://webit-news-search.p.rapidapi.com/trending?language=en",
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-host": "webit-news-search.p.rapidapi.com",
-                "x-rapidapi-key": "b11910c071msh3ea041eaa90af26p14f827jsn36ddcc0c9d92"
-            }
-        }
-        
-    },
-    mounted () {
-        console.clear();
-        this.getItems();
-
-        var counter = 0;
-		$("#news .grid-item").each(function (index, element) {
-            counter += 1;
-            debugger
-
-            if (counter > 1)[
-                alert("hi")
-            ]
-        });
-    },
-    methods:{
-        getItems(){
-            var self = this
-            $.ajax(this.settings).done(function (response) {
-                console.log(response);
-                self.items = response.data.results;
-            });
-        },
-    },
-    template:`
-    <div id="news">
-            <div class="grid-item" v-for="item in items">
-                <a :href="item.url" target="_blank">
-                    <div class="card">
-                        <img :src="item.image" alt="">
-                        <div class="bottom">
-                            <p class="title">
-                                {{item.title}}
-                            </p>
-                            <div class="source">
-                                {{item.source_name}}
-                            </div>
-                        </div>
+            },
+            template:`
+            <div id="bookmarks">
+                
+                <div class="bookmarks">
+                    
+                    <div class="bookmark" v-for="items in bookmarks">
+                        <i @click="deleteBookmark(items.url)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Bookmark"></i>
+                        <a :href="extendUrl(items.url)" target="_blank">
+                            <img :src="fetchFavicon(items.url)">
+                            {{shortenUrl(items.url) }}
+                        </a>
                     </div>
-                </a>
-            </div>
-    </div>`,
+                    <div class="add-bookmark" @click="this.openPopup">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                        Add Bookmark
+                    </div>
+                </div>
+                
+            </div>`,
+            
+            
+        })
     
+        new Vue({
+            el:'todo',
+            data:{
+                display: true,
+                todos: JSON.parse(localStorage.getItem('itemsArray'))
+                
+            },
+            mounted() {
+                this.ArrayToJson()
+                if (this.todos === null){
+                    this.todos = []
+                }
+            
+            },
+            methods:{
+                openPopup(){
+                    var self = this
     
-})
+                    new swal({
+                        title: 'Add Todo',
+                        html:
+                        `<input type="text" id="swal-input1" class="swal2-input" placeholder="Name">
+                            <input type="date" id="swal-input2" name="" id="" class="swal2-input">
+                            <span>
+                            <label for="swal-input3" >Important</label>
+                            <input type="checkbox" id="swal-input3" name="" id="" class="swal2-input">
+                            </span>
+                            `,
+                        preConfirm: function () {
+                        return new Promise(function (resolve) {
+                            resolve([
+                            $('#swal-input1').val(),
+                            $('#swal-input2').val()
+                            ])
+                        })
+                        },
+                        onOpen: function () {
+                        $('#swal-input1').focus()
+                        }
+                    }).then(function (result) {
+    
+                        var oldItems = JSON.parse(localStorage.getItem('itemsArray')) || [];
+    
+                        if(document.querySelector("#swal-input3").checked){
+                            var setImportant = true
+                        } else {
+                            var setImportant = false
+                        }
+    
+                        var newItem = 
+                        {
+                        'name': result.value[0],
+                        'dueDate': result.value[1],
+                        'important': setImportant
+                        };
+    
+                        oldItems.push(newItem);
+                        self.todos = oldItems
+                        localStorage.setItem('itemsArray', JSON.stringify(oldItems));
+                    })
+                },
+                ArrayToJson(){
+                    JSON.parse(this.todos)
+                },
+                ArrayToStorage(){
+                    localStorage.setItem("itemsArray", JSON.stringify(this.todos) )
+                },
+                deleteItem(item){
+    
+                    var self = this
+    
+                    var olditems = JSON.parse(localStorage.getItem('itemsArray')) || []
+                    console.log(item)
+                    $.each(olditems, function (indexInArray, valueOfElement) { 
+                        if (item === valueOfElement.name){
+                            olditems.splice(indexInArray, 1)
+                            console.log('delete this ' + item)
+                            self.todos = olditems
+                            self.ArrayToStorage()
+                        }
+                    });
+    
+                    Swal.fire({
+                        toast: true,
+                        text: 'Todo Deleted',
+                        position: 'bottom-end',
+                    })
+                },
+                isImportant(item){
+                    if (item){
+                        return '<i class="fas fa-exclamation"></i>'
+                    } else {
+                        return ''
+                    }
+                },
+                compareDates(date){
+                    if (moment(moment().format('L')).isAfter(date)){
+                        return true
+                    }
+                    
+                },
+                fullscreen(){
+                    $("#todos").toggleClass("active");
+                }
+            },
+            template:`
+            <div id="todos">
+                
+                <div class="todos">
+                    
+                    <div class="todo" v-for="items in todos">
+                        <i @click="deleteItem(items.name)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Item"></i>
+                        <a>
+                        <span>
+                            <p class="name">{{items.name}}</p>
+                            <p>{{items.dueDate}}</p>
+                        </span>
+                            <p v-html="isImportant(items.important)" class="important" title="Important"></p>
+                            <i v-if="compareDates(items.dueDate)" class="overdue fas fa-exclamation-triangle" title="Overdue"></i>
+                        </a>
+                    </div>
+                    <i @click="fullscreen" class="fas fa-expand-alt"></i>
+                    <div class="add-item" >
+                        <span @click="openPopup">
+                            Add Item
+                            <i class="fas fa-plus"></i>
+                        <span>
+                    </div>
+                </div>
+                
+            </div>`,
+            
+            
+        })
+    
+        new Vue({
+            el: 'weather',
+            data:{
+                display: true,
+                longitude: null,
+                latitude: null,
+                data: null
+    
+            },
+            mounted () {
+                this.getLocation()
+            },
+            methods:{
+                getLocation() {
+                    if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(this.showPosition);
+                    }
+                },
+                showPosition(position) {
+                    this.latitude = position.coords.latitude
+                    this.longitude = position.coords.longitude
+                
+                    var self = this
+                    console.log("https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric")
+                    $.ajax({
+                        url: "https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric",
+                        context: document.body
+                    }).done(function(content) {
+    
+                        self.data = content
+                        localStorage.setItem("location", content.name)
+                
+                    });
+                },
+                returnImg(img){
+                    return "http://openweathermap.org/img/wn/" + img + ".png"
+                },
+                truncNum(num){
+                    return Math.trunc(num) + "°C";
+                }
+            },
+            template:`
+            <div id="weather">
+                <p class="title">{{data.name}}</p>
+                <p class="description">{{data.weather[0].description}}</p>
+                <span class="temp">
+                    {{truncNum(data.main.temp)}}
+                    <img :src="returnImg(data.weather[0].icon)">
+                </span>
+                <span class="hi-low">
+                    <p>Lows of {{truncNum(data.main.temp_min)}}</p>
+                    <p>Highs of {{truncNum(data.main.temp_max)}}</p>
+                </span>
+                <p class="humidity">Humidity: {{data.main.humidity}}%</p>
+            </div>`,
+            
+        })
+    
+        new Vue({
+            el:'news',
+            data:{
+                display: true,
+                items: null,
+                NewsFirst: null,
+                NewsLast : null,
+    
+                url: 'https://gnews.io/api/v4/top-headlines?token=c739938a812e83d058bf79d67283f77c&lang=en',
+
+                
+            },
+            mounted () {
+                console.clear();
+                this.getItems();
+    
+                var counter = 0;
+                $("#news .grid-item").each(function (index, element) {
+                    counter += 1;
+    
+                    if (counter > 1)[
+                        alert("hi")
+                    ]
+                });
+            },
+            methods:{
+                getItems(){
+                    var self = this
+                    $.ajax(this.url).done(function (response) {
+                        console.log(response);
+                        var items = response.articles;
+    
+                        var firstTwo = [];
+                        var lastItems = [];
+    
+                        $.each(items, function (indexInArray, valueOfElement) { 
+    
+                            if (indexInArray >= 4){
+                                lastItems.push(this);
+                            } else {
+                                firstTwo.push(this);
+                            }
+                        });
+    
+                        self.NewsFirst = firstTwo
+                        self.lastItems = lastItems
+                    });
+                },
+                showMore(){
+                    $(".extend").slideToggle();
+                },
+                validateImg(img){
+                    if (img == null || img == undefined || img == ""){
+                        return '/img/not-found.jpg'
+                    } else {
+                        return img
+                    }
+                }
+            },
+            template:`
+            <div id="news">
+                    <div class="grid-item" v-for="item in NewsFirst">
+                        <a :href="item.url" target="_blank">
+                            <div class="card">
+                                <img :src="validateImg(item.image)" alt="">
+                                <div class="bottom">
+                                    <p class="title">
+                                        {{item.title}}
+                                    </p>
+                                    <div class="source">
+                                        {{item.source.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="grid-item extend" v-for="item in lastItems">
+                        <a :href="item.url" target="_blank">
+                            <div class="card">
+                                <img :src="validateImg(item.image)" alt="">
+                                <div class="bottom">
+                                    <p class="title">
+                                        {{item.title}}
+                                    </p>
+                                    <div class="source">
+                                        {{item.source.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+    
+                    <a class="btn show-more" @click="showMore">Show More</a>
+            </div>`,
+            
+            
+        })
+    
+    }
+}

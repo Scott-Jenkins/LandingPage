@@ -162,6 +162,13 @@ $(".fa-search").click(function (e) {
 });
 
 
+$("#google-search").keydown(function (e) { 
+    if  (e.keyCode === 13){
+        $(".fa-search").click()
+    }
+});
+
+
 
 $( ".loading" ).each(function( index ) {
     if( $(this).is(':empty') || $(this).text() == "" ){
@@ -172,3 +179,5 @@ $( ".loading" ).each(function( index ) {
       }
   });
 $("main").fadeIn(1000);
+
+dragula([document.querySelector('.col-md-5'), document.querySelector('.col-md-7')]);
