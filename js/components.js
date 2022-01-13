@@ -615,7 +615,7 @@ function canEdit(answer){
     
                         $.each(items, function (indexInArray, valueOfElement) { 
     
-                            if (indexInArray >= 4){
+                            if (indexInArray >= 2){
                                 lastItems.push(this);
                             } else {
                                 firstTwo.push(this);

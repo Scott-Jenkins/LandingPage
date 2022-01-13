@@ -407,6 +407,8 @@ html #settingsmenu {
 html #settingsmenu.active {
   visibility: visible;
   width: calc(100vw - 50px);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 
 html #settingsmenu h2 {
