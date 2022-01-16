@@ -1,9 +1,9 @@
 $shadow: 0px 2px 15px 0px #80808026;
 
 :root{
-    --accent: #333;
+    --accent: #5600ff;
     --font:#333;
-    --background:#333;
+    --background:white;
 }
 html{
     //transform: skew(339deg, 352deg);
@@ -23,7 +23,7 @@ html{
         padding: 0;
         margin: 1%;
         background: var(--background);
-        color: #eee8d5;
+        color: var(--font);
         //text-shadow: 0 0 0.3vw #ffffff59;
         //font-family: monospace;
         font-size:42px;
@@ -56,7 +56,7 @@ html{
             background: none;
             border: none;
             width: 100%;
-            color: white;
+            color: var(--font);
         }
 
         #spotify-area{
@@ -278,15 +278,16 @@ html{
             top:0;
             left:0;
             height: 100vh;
-            background-color: rgba(37, 37, 37, 0.2);
+            //background-color: rgba(37, 37, 37, 0.2);
             width: 50px;
             z-index: 100;
-            box-shadow: 5px 0px 10px 0px #24242473;
+            box-shadow: 5px 0px 10px 0px #2424240f;
 
             .options{
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                display: none;
 
                 .option{
                     font-size: 26px;
@@ -314,6 +315,14 @@ html{
                     .preview{
                         position: absolute;
                         left:50px;
+                    }
+
+                    .fa-pen{
+                        border-radius: 100%;
+                        background: var(--accent);
+                        color: var(--background);
+                        padding: 8px;
+                        text-shadow: none;
                     }
                 }
             }
@@ -347,6 +356,26 @@ html{
                     }
                     &:hover:after {
                         width: 100%;
+                    }
+
+                    &.fa-pen{
+                        border-radius: 100%;
+                        background: var(--accent);
+                        color: var(--background);
+                        padding: 8px;
+                        text-shadow: none;
+                        font-size: 24px;
+                        margin-bottom: 10px;
+
+                        &:after{
+                            display: none;
+                        }
+
+                        &:hover{
+                            background: var(--background);
+                            color: var(--accent);
+                            transition: 0.2s;
+                        }
                     }
                 }
 
@@ -515,7 +544,42 @@ html{
         }
 
         div[class^="col-"]{
-            margin-bottom: 30px;
+            margin-bottom: 30px; 
+
+            &.edit{
+                border:dashed yellow 2px;
+                background: rgba(255, 255, 0, 0.1);
+                text-align: center;
+                text-transform: capitalize;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: stretch;
+                min-height: 40px;
+                padding: 0px 40px;
+
+                > *{
+                    cursor: grab;
+                    border: 2px dashed var(--font);
+                    color: var(--font);
+                    padding: 0px 40px;
+                    margin: 20px 0px;
+                    position: relative;
+
+                    &:hover{
+                        filter: brightness(0.9);
+                    }
+
+                    i{
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        font-size: 16px;
+                    }
+                }
+
+                
+            }
         }
 
         /* BVAmbient Style */

@@ -1,10 +1,93 @@
-canEdit("true")
+canEdit("false")
+loadSavedLayout()
+
+function loadSavedLayout(inEdit){
+    if (localStorage.getItem("layout") != null){
+        $("main").html(localStorage.getItem("layout"))
+        $("main").fadeIn(1000);
+        
+
+        if (inEdit == "edit"){
+            canEdit("true")
+        } else {
+            canEdit("false")
+        }
+    } else {
+         $("main").fadeIn(1000);
+
+         if (inEdit == "edit"){
+            canEdit("true")
+        } else {
+            canEdit("false")
+        }
+    }
+}
 
 $(function () {
-    $(".fa-edit").click(function (e) { 
-        canEdit("false")
+    $(".fa-pen").click(function (e) { 
+        if ($("#name-and-clock").length){
+            canEdit("true")
+            
+            $( "main" ).load(window.location.href + " .load" )
+            setTimeout(function() {loadSavedLayout("edit")}, 100);
+            setTimeout(function() {startEdit()}, 100);
+             
+            
+        } else {
+            Swal.fire({
+                title: 'Do you want to save the changes?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+              }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  Swal.fire('Saved!', '', 'success')
+                  savePageLayout()
+                  location.reload()
+                } else if (result.isDenied) {
+                  Swal.fire('Changes are not saved', '', 'info')
+                  location.reload()
+                }
+              })
+        }
+        
     });
 });
+var components = ['Name-and-Clock', 'weather', 'google-search', 'bookmarks', 'news', 'todo-list']
+
+function savePageLayout() {
+    $('main div[class^="col-"]').removeClass("edit");
+
+    $.each(components, function (indexInArray, valueOfElement) { 
+        $(valueOfElement).text("");
+    });
+
+    var page = $("main").html()
+    localStorage.setItem("layout", page)    
+}
+
+function startEdit(){
+        
+        $('main div[class^="col-"]').toggleClass("edit");
+
+        var containers = $('.edit').toArray();
+        dragula(containers, {
+            isContainer: function (el) {
+                return el.classList.contains('edit');
+                
+            }
+        });
+        
+
+        $.each(components, function (indexInArray, valueOfElement) { 
+             $(valueOfElement).text(valueOfElement);
+             $('<i/>',{
+                class: 'fas fa-arrows-alt'
+            }).appendTo(valueOfElement);
+        });
+}
 new Vue({
     el:'sidebar',
     data:{
@@ -21,7 +104,7 @@ new Vue({
                     link: 'https://www.google.co.uk/'
                 },
                 'edit':{
-                    class: 'far fa-edit',
+                    class: 'fas fa-pen',
                 }
             }
         
@@ -43,7 +126,9 @@ new Vue({
             </a>
         </div>
         <div class="settings">
+            
             <i class="fas fa-cog" onclick="openSettings()"></i>
+            <i class="fas fa-pen"></i>
             <img :src="profilePic()" class="profile">
         </div>
     </div>`,
@@ -283,7 +368,7 @@ function openSettings() {
 
 
 function canEdit(answer){
-    if (answer == "true"){
+    if (answer == "false"){
     
 
     
@@ -386,7 +471,7 @@ function canEdit(answer){
         })
     
         new Vue({
-            el:'todo',
+            el:'todo-list',
             data:{
                 display: true,
                 todos: JSON.parse(localStorage.getItem('itemsArray'))
@@ -492,7 +577,7 @@ function canEdit(answer){
             },
             template:`
             <div id="todos">
-                
+                <p class="todo-title">To-Do List</p>
                 <div class="todos">
                     
                     <div class="todo" v-for="items in todos">
@@ -594,14 +679,7 @@ function canEdit(answer){
                 console.clear();
                 this.getItems();
     
-                var counter = 0;
-                $("#news .grid-item").each(function (index, element) {
-                    counter += 1;
-    
-                    if (counter > 1)[
-                        alert("hi")
-                    ]
-                });
+
             },
             methods:{
                 getItems(){
@@ -637,7 +715,8 @@ function canEdit(answer){
                     }
                 }
             },
-            template:`
+            template:`<div>
+            <p class="todo-title">News</p>
             <div id="news">
                     <div class="grid-item" v-for="item in NewsFirst">
                         <a :href="item.url" target="_blank">
@@ -672,10 +751,127 @@ function canEdit(answer){
                     </div>
     
                     <a class="btn show-more" @click="showMore">Show More</a>
-            </div>`,
+            </div>
+            <div>`,
             
             
         })
+
+        new Vue({
+            el:'google-search',
+            data:{
+                query: null,
+                url: 'https://www.google.com/search?q='
+            },
+            mounted(){
+                $("#google-search").keydown(function (e) { 
+                    if  (e.keyCode === 13){
+                        $(".fa-search").click()
+                    }
+                })
+            },
+            methods:{
+                search(){
+                    window.location.href = this.url + this.query;
+                }
+            },
+            template: `
+            <div id="google-area">
+                <input type="text" name="" id="google-search" placeholder="Google Search" v-bind="query">
+                <i class="fas fa-search" @click="search"></i>
+            </div>
+            `
+
+            
+        })
     
-    }
+        new Vue({
+            el:'google-search',
+            data:{
+                query: null,
+                url: 'https://www.google.com/search?q='
+            },
+            mounted(){
+                $("#google-search").keydown(function (e) { 
+                    if  (e.keyCode === 13){
+                        $(".fa-search").click()
+                    }
+                })
+            },
+            methods:{
+                search(){
+                    window.location.href = this.url + this.query;
+                }
+            },
+            template: `
+            <div id="google-area">
+                <input type="text" name="" id="google-search" placeholder="Google Search" v-bind="query">
+                <i class="fas fa-search" @click="search"></i>
+            </div>
+            `
+
+            
+        })
+
+        new Vue({
+            el:'Name-and-Clock',
+            data:{
+                time_of_day: "",
+                d: "",
+                n: "",
+                h: "",
+                m: "",
+                name: "" 
+            },
+            mounted(){
+                this.setTime()
+                setInterval(this.setTime, 5000)
+                
+                this.name = localStorage.getItem("name")
+                if (this.name === null || this.name == "[Enter Name]")
+                {
+                    this.name = "[Enter Name]"
+                }
+
+                $("#name").blur(function (e) { 
+                    localStorage.setItem("name", $("#name").val())
+                });
+            },
+            methods:{
+                setTime(){
+                    this.d = new Date();
+                    this.n = this.d.getTime();
+                    this.h = this.d.getHours();
+                    this.m = this.d.getMinutes();
+
+                    if (this.h >= 0) {
+                        this.time_of_day = "morning"
+                    }
+                
+                    if (this.h > 12) {
+                        this.time_of_day = "afternoon"
+                    }
+                
+                    if (this.h > 17) {
+                        this.time_of_day = "evening"
+                    }
+                
+                    if (this.h > 12) {
+                        this.h = this.h - 12;
+                    }
+                },
+                setName(){
+                    localStorage.setItem("name", this.name.value)
+                }
+            },
+            template: `
+            <div id="name-and-clock">
+                <input type="text" id="name" v-model="name">
+                <p id="introduction">it's currently <span>{{this.m}}</span> minutes past <span>{{this.h}}</span> in the <span>{{this.time_of_day}}</span></p>
+            </div>
+            `
+
+            
+        })
+    } 
 }

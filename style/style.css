@@ -1,7 +1,7 @@
 :root {
-  --accent: #333;
+  --accent: #5600ff;
   --font:#333;
-  --background:#333;
+  --background:white;
 }
 
 html {
@@ -26,7 +26,7 @@ html body {
   padding: 0;
   margin: 1%;
   background: var(--background);
-  color: #eee8d5;
+  color: var(--font);
   font-size: 42px;
 }
 
@@ -55,7 +55,7 @@ html body #name {
   background: none;
   border: none;
   width: 100%;
-  color: white;
+  color: var(--font);
 }
 
 html body #spotify-area {
@@ -294,11 +294,10 @@ html #sidebar {
   top: 0;
   left: 0;
   height: 100vh;
-  background-color: rgba(37, 37, 37, 0.2);
   width: 50px;
   z-index: 100;
-  -webkit-box-shadow: 5px 0px 10px 0px #24242473;
-          box-shadow: 5px 0px 10px 0px #24242473;
+  -webkit-box-shadow: 5px 0px 10px 0px #2424240f;
+          box-shadow: 5px 0px 10px 0px #2424240f;
 }
 
 html #sidebar .options {
@@ -312,6 +311,7 @@ html #sidebar .options {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  display: none;
 }
 
 html #sidebar .options .option {
@@ -343,6 +343,14 @@ html #sidebar .options .option:hover:after {
 html #sidebar .options .option .preview {
   position: absolute;
   left: 50px;
+}
+
+html #sidebar .options .option .fa-pen {
+  border-radius: 100%;
+  background: var(--accent);
+  color: var(--background);
+  padding: 8px;
+  text-shadow: none;
 }
 
 html #sidebar .settings {
@@ -385,6 +393,27 @@ html #sidebar .settings i:after {
 
 html #sidebar .settings i:hover:after {
   width: 100%;
+}
+
+html #sidebar .settings i.fa-pen {
+  border-radius: 100%;
+  background: var(--accent);
+  color: var(--background);
+  padding: 8px;
+  text-shadow: none;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+html #sidebar .settings i.fa-pen:after {
+  display: none;
+}
+
+html #sidebar .settings i.fa-pen:hover {
+  background: var(--background);
+  color: var(--accent);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 
 html #sidebar .settings .profile {
@@ -586,6 +615,50 @@ html a:link, html a:active {
 
 html div[class^="col-"] {
   margin-bottom: 30px;
+}
+
+html div[class^="col-"].edit {
+  border: dashed yellow 2px;
+  background: rgba(255, 255, 0, 0.1);
+  text-align: center;
+  text-transform: capitalize;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  min-height: 40px;
+  padding: 0px 40px;
+}
+
+html div[class^="col-"].edit > * {
+  cursor: -webkit-grab;
+  cursor: grab;
+  border: 2px dashed var(--font);
+  color: var(--font);
+  padding: 0px 40px;
+  margin: 20px 0px;
+  position: relative;
+}
+
+html div[class^="col-"].edit > *:hover {
+  -webkit-filter: brightness(0.9);
+          filter: brightness(0.9);
+}
+
+html div[class^="col-"].edit > * i {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
 }
 
 html .bvambient_particle {

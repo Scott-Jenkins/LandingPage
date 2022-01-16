@@ -1,66 +1,27 @@
-setInterval(SetTime, 5000)
 
-SetTime()
-function SetTime() {
-    var d = new Date();
-    var n = d.getTime();
-    var h = d.getHours();
-    var m = d.getMinutes();
-
-    let time_of_day = ""
-
-    if (h > 0) {
-        time_of_day = "morning"
-    }
-
-    if (h > 12) {
-        time_of_day = "afternoon"
-    }
-
-    if (h > 17) {
-        time_of_day = "evening"
-    }
-
-    if (h > 12) {
-        h = h - 12;
-    }
-
-    let introduction = document.querySelector("#introduction")
-    introduction.innerHTML = "it's currently <span>" + m + "</span> minutes past <span>" + h + "</span> in the <span>" + time_of_day + "</span><i></i>";
-
-    getATColour();
-
-    function UnderscoreTimer() {
-        if (document.querySelector("#introduction i").textContent = "") {
-            document.querySelector("#introduction i").textContent = "_"
-        } else {
-            document.querySelector("#introduction i").textContent = ""
-        }
-    }
-}
 /////////////////////////////////////////////////////ignore above
 
-let nameLabel = document.querySelector("#name")
+// let nameLabel = document.querySelector("#name")
 
-getName()
+// getName()
 
-function getName(){
-    let name = localStorage.getItem("name")
+// function getName(){
+//     let name = localStorage.getItem("name")
 
-    if (name === null)
-    {
-        nameLabel.value = "[Enter Name]"
+//     if (name === null)
+//     {
+//         nameLabel.value = "[Enter Name]"
         
-    } else
-    {
-        nameLabel.value = name
-    }
-}
-function setName(){
-    localStorage.setItem("name", nameLabel.value)
-    getName()
-}
-nameLabel.addEventListener('blur', setName)
+//     } else
+//     {
+//         nameLabel.value = name
+//     }
+// }
+// function setName(){
+//     localStorage.setItem("name", nameLabel.value)
+//     getName()
+// }
+// nameLabel.addEventListener('blur', setName)
 
 /////////////////////////////////////////////////////Colour
 let BGColor = document.querySelector("#BG-Color")
@@ -154,19 +115,8 @@ ATColor.addEventListener('blur', setATColour)
 
 
 
-$(".fa-search").click(function (e) { 
-    
-    var searchValue = $("#google-search").val()
-    var Url = 'https://www.google.com/search?q='
-    window.location.href = Url + searchValue;
-});
 
 
-$("#google-search").keydown(function (e) { 
-    if  (e.keyCode === 13){
-        $(".fa-search").click()
-    }
-});
 
 
 
@@ -178,6 +128,5 @@ $( ".loading" ).each(function( index ) {
           
       }
   });
-$("main").fadeIn(1000);
 
-dragula([document.querySelector('.col-md-5'), document.querySelector('.col-md-7')]);
+
