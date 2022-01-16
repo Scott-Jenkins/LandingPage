@@ -806,6 +806,10 @@ html #todos .todos .fa-expand-alt {
   cursor: pointer;
 }
 
+html #weather {
+  text-align: right;
+}
+
 html #weather .title {
   font-size: 42px;
 }
