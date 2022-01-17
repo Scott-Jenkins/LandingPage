@@ -688,6 +688,10 @@ html div[class^="col-"] > *:not(:last-child) {
   margin-bottom: 30px;
 }
 
+html div[class^="col-"] > *.hidden {
+  display: none;
+}
+
 html div[class^="col-"].edit {
   border: dashed yellow 2px;
   background: rgba(255, 255, 0, 0.1);
@@ -718,6 +722,10 @@ html div[class^="col-"].edit > * {
   padding: 0px 40px;
   margin: 20px 0px;
   position: relative;
+}
+
+html div[class^="col-"].edit > *.hidden {
+  display: block;
 }
 
 html div[class^="col-"].edit > *:hover {

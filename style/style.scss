@@ -614,6 +614,10 @@ html{
                 &:not(:last-child){
                     margin-bottom: 30px; 
                 }
+
+                &.hidden{
+                    display: none;
+                }
             }
 
             &.edit{
@@ -635,6 +639,10 @@ html{
                     padding: 0px 40px;
                     margin: 20px 0px;
                     position: relative;
+
+                    &.hidden{
+                        display: block;
+                    }
 
                     &:hover{
                         filter: brightness(0.9);
