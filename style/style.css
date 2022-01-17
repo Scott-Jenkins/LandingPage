@@ -58,6 +58,10 @@ html body #name {
   color: var(--font);
 }
 
+html body #introduction span {
+  color: var(--accent);
+}
+
 html body #spotify-area {
   background-color: #191414;
   width: 100%;
@@ -148,8 +152,8 @@ html body #news .grid-item .card {
   border-radius: 14px;
   background: #ffffff;
   border: none;
-  -webkit-box-shadow: 0px 2px 15px 0px #80808026;
-          box-shadow: 0px 2px 15px 0px #80808026;
+  -webkit-box-shadow: 0px 2px 15px 0px #80808014;
+          box-shadow: 0px 2px 15px 0px #80808014;
 }
 
 html body #news .grid-item .card img {
@@ -221,23 +225,23 @@ html .todo-title {
   margin-top: 24px;
 }
 
-html #google-area {
+html #google-area .bar {
   position: relative;
   margin-bottom: 10px;
 }
 
-html #google-area #google-search {
+html #google-area .bar #google-search {
   font-size: 24px;
   border: none;
   border-radius: 40px;
   padding: 4px 24px;
   width: 100%;
   margin-top: 0;
-  -webkit-box-shadow: 0px 2px 15px 0px #80808026;
-          box-shadow: 0px 2px 15px 0px #80808026;
+  -webkit-box-shadow: 0px 2px 15px 0px #80808014;
+          box-shadow: 0px 2px 15px 0px #80808014;
 }
 
-html #google-area .fa-search {
+html #google-area .bar .fa-search {
   position: absolute;
   right: 14px;
   bottom: 15px;
@@ -298,6 +302,19 @@ html #sidebar {
   z-index: 100;
   -webkit-box-shadow: 5px 0px 10px 0px #2424240f;
           box-shadow: 5px 0px 10px 0px #2424240f;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 html #sidebar .options {
@@ -364,8 +381,6 @@ html #sidebar .settings {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  position: absolute;
-  bottom: 0;
   width: 100%;
 }
 
@@ -412,6 +427,50 @@ html #sidebar .settings i.fa-pen:after {
 html #sidebar .settings i.fa-pen:hover {
   background: var(--background);
   color: var(--accent);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+html #sidebar .settings i.fa-save {
+  border-radius: 100%;
+  background: lime;
+  color: var(--background);
+  padding: 8px 10px;
+  text-shadow: none;
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+html #sidebar .settings i.fa-save:after {
+  display: none;
+}
+
+html #sidebar .settings i.fa-save:hover {
+  background: var(--background);
+  color: lime;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+html #sidebar .settings i.fa-ban {
+  border-radius: 100%;
+  background: red;
+  color: var(--background);
+  padding: 8px;
+  text-shadow: none;
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+html #sidebar .settings i.fa-ban:after {
+  display: none;
+}
+
+html #sidebar .settings i.fa-ban:hover {
+  background: var(--background);
+  color: red;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
@@ -617,6 +676,15 @@ html div[class^="col-"] {
   margin-bottom: 30px;
 }
 
+html div[class^="col-"] > * {
+  background: var(--background);
+  padding: 16px;
+  border-radius: 20px;
+  height: 100%;
+  -webkit-box-shadow: 0px 2px 15px 0px #80808014;
+          box-shadow: 0px 2px 15px 0px #80808014;
+}
+
 html div[class^="col-"].edit {
   border: dashed yellow 2px;
   background: rgba(255, 255, 0, 0.1);
@@ -658,6 +726,19 @@ html div[class^="col-"].edit > * i {
   position: absolute;
   top: 10px;
   right: 10px;
+  font-size: 16px;
+}
+
+html div[class^="col-"].edit > * input.hide-opt {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+html div[class^="col-"].edit > * p.hide-opt-label {
+  position: absolute;
+  top: 4px;
+  left: 26px;
   font-size: 16px;
 }
 
@@ -808,10 +889,12 @@ html #todos .todos .fa-expand-alt {
 
 html #weather {
   text-align: right;
+  position: relative;
 }
 
 html #weather .title {
   font-size: 42px;
+  position: absolute;
 }
 
 html #weather .description {
@@ -821,19 +904,23 @@ html #weather .description {
 
 html #weather .temp {
   color: var(--font);
-  font-size: 32px;
+  font-size: 60px;
   position: relative;
 }
 
 html #weather .temp img {
   position: absolute;
-  right: 64px;
-  top: -10px;
+  right: 120px;
+  top: 6px;
 }
 
-html #weather .hi-low, html #weather .humidity {
+html #weather .hi-low {
   color: var(--font);
   font-size: 16px;
+  position: absolute;
+  left: 18px;
+  bottom: 20px;
+  text-align: left;
 }
 
 html .line-through {
@@ -901,10 +988,6 @@ html #swal2-html-container span {
 
 html #swal2-html-container span input {
   margin-top: 0;
-}
-
-html div[class^="col-"] {
-  margin-bottom: 10px;
 }
 
 @-webkit-keyframes bouncing-loader {

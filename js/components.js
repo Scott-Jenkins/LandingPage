@@ -45,19 +45,62 @@ $(function () {
                 if (result.isConfirmed) {
                   Swal.fire('Saved!', '', 'success')
                   savePageLayout()
+                  $(".fa-save").fadeOut();
+                  $(".fa-ban").fadeOut();
                   location.reload()
                 } else if (result.isDenied) {
                   Swal.fire('Changes are not saved', '', 'info')
                   location.reload()
+                  $(".fa-save").fadeOut();
+                  $(".fa-ban").fadeOut();
                 }
               })
         }
         
     });
+
+    $(".fa-save").click(function (e) { 
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              Swal.fire('Saved!', '', 'success')
+              $(".fa-save").fadeOut();
+              $(".fa-ban").fadeOut();
+              savePageLayout()
+              $( "main" ).load(window.location.href + " .load" )
+                canEdit("false")
+                setTimeout(function() {loadSavedLayout()}, 100);
+            } else if (result.isDenied) {
+              Swal.fire('Changes are not saved', '', 'info')
+              $(".fa-save").fadeOut();
+              $(".fa-ban").fadeOut();
+              $( "main" ).load(window.location.href + " .load" )
+                canEdit("false")
+                setTimeout(function() {loadSavedLayout()}, 100);
+            }
+          })
+        
+    });
+
+    $(".fa-ban").click(function (e) { 
+        $(".fa-save").fadeOut();
+        $(".fa-ban").fadeOut();
+        $( "main" ).load(window.location.href + " .load" )
+        canEdit("false")
+        setTimeout(function() {loadSavedLayout()}, 100);
+    });
 });
 var components = ['Name-and-Clock', 'weather', 'google-search', 'bookmarks', 'news', 'todo-list']
 
+
 function savePageLayout() {
+
     $('main div[class^="col-"]').removeClass("edit");
 
     $.each(components, function (indexInArray, valueOfElement) { 
@@ -70,6 +113,9 @@ function savePageLayout() {
 
 function startEdit(){
         
+        $(".fa-save").fadeIn();
+        $(".fa-ban").fadeIn();
+
         $('main div[class^="col-"]').toggleClass("edit");
 
         var containers = $('.edit').toArray();
@@ -86,6 +132,27 @@ function startEdit(){
              $('<i/>',{
                 class: 'fas fa-arrows-alt'
             }).appendTo(valueOfElement);
+            $('<input/>',{
+                type: 'checkbox',
+                text: 'Hidden',
+                class: 'hide-opt'
+            }).appendTo(valueOfElement);
+            $('<p/>',{
+                text: 'Hidden',
+                class: 'hide-opt-label'
+            }).appendTo(valueOfElement);
+
+            if ($(valueOfElement).hasClass("hidden")){
+                $(valueOfElement + " .hide-opt").prop( "checked", true );
+            }
+
+            $(valueOfElement + " .hide-opt").change(function() {
+                if(this.checked) {
+                    $(valueOfElement).addClass("hidden");
+                } else {
+                    $(valueOfElement).removeClass("hidden");
+                }
+            });
         });
 }
 new Vue({
@@ -128,7 +195,9 @@ new Vue({
         <div class="settings">
             
             <i class="fas fa-cog" onclick="openSettings()"></i>
+            <i class="fas fa-ban"></i>
             <i class="fas fa-pen"></i>
+            <i class="far fa-save"></i>
             <img :src="profilePic()" class="profile">
         </div>
     </div>`,
@@ -374,504 +443,493 @@ function canEdit(answer){
     
     
     
-
-        new Vue({
-            el:'bookmarks',
-            data:{
-                display: true,
-                bookmarks: JSON.parse(localStorage.getItem('bookmarks'))
-                
-            },
-            mounted () {
-                this.ArrayToJson()
-                if (this.bookmarks === null){
-                    this.bookmarks = []
-                }
-    
-                
-            },
-            methods:{
-                openPopup(){
-                    Swal.fire({
-                        title: "Add a Bookmark",
-                        text: "Please enter the URL:",
-                        input: 'text',
-                        showCancelButton: true        
-                    }).then((result) => {
-                        if (result.value) {
-                            var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
-    
-                            var newBm = 
-                            {
-                            'url': result.value
-                            };
-    
-                            olditems.push(newBm)
-                            this.bookmarks = olditems
-                            this.ArrayToStorage()
-                        }
-                    });
-                },
-                ArrayToJson(){
-                    JSON.parse(this.bookmarks)
-                },
-                ArrayToStorage(){
-                    localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks) )
-                },
-                fetchFavicon(url){
-                    return 'http://icon.horse/icon/' +  url.replaceAll("https://", "");
-                },
-                shortenUrl(url){
-                    return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('.')[0]
-                },
-                extendUrl(url){
-                    if (url.includes("https://" || "http://") === false){
-                        url = "https://" + url
-                    }
-                    return url
-                },
-                deleteBookmark(BMurl){
-    
-                    var self = this
-    
-                    var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
-                    console.log(BMurl)
-                    $.each(olditems, function (indexInArray, valueOfElement) { 
-                        if (BMurl === valueOfElement.url){
-                            olditems.splice(indexInArray, 1)
-                            console.log('delete this ' + BMurl)
-                            self.bookmarks = olditems
-                            self.ArrayToStorage()
-                        }
-                    });
-                }
-    
-            },
-            template:`
-            <div id="bookmarks">
-                
-                <div class="bookmarks">
-                    
-                    <div class="bookmark" v-for="items in bookmarks">
-                        <i @click="deleteBookmark(items.url)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Bookmark"></i>
-                        <a :href="extendUrl(items.url)" target="_blank">
-                            <img :src="fetchFavicon(items.url)">
-                            {{shortenUrl(items.url) }}
-                        </a>
-                    </div>
-                    <div class="add-bookmark" @click="this.openPopup">
-                        <i class="fas fa-plus" aria-hidden="true"></i>
-                        Add Bookmark
-                    </div>
-                </div>
-                
-            </div>`,
-            
-            
-        })
-    
-        new Vue({
-            el:'todo-list',
-            data:{
-                display: true,
-                todos: JSON.parse(localStorage.getItem('itemsArray'))
-                
-            },
-            mounted() {
-                this.ArrayToJson()
-                if (this.todos === null){
-                    this.todos = []
-                }
-            
-            },
-            methods:{
-                openPopup(){
-                    var self = this
-    
-                    new swal({
-                        title: 'Add Todo',
-                        html:
-                        `<input type="text" id="swal-input1" class="swal2-input" placeholder="Name">
-                            <input type="date" id="swal-input2" name="" id="" class="swal2-input">
-                            <span>
-                            <label for="swal-input3" >Important</label>
-                            <input type="checkbox" id="swal-input3" name="" id="" class="swal2-input">
-                            </span>
-                            `,
-                        preConfirm: function () {
-                        return new Promise(function (resolve) {
-                            resolve([
-                            $('#swal-input1').val(),
-                            $('#swal-input2').val()
-                            ])
-                        })
-                        },
-                        onOpen: function () {
-                        $('#swal-input1').focus()
-                        }
-                    }).then(function (result) {
-    
-                        var oldItems = JSON.parse(localStorage.getItem('itemsArray')) || [];
-    
-                        if(document.querySelector("#swal-input3").checked){
-                            var setImportant = true
-                        } else {
-                            var setImportant = false
-                        }
-    
-                        var newItem = 
-                        {
-                        'name': result.value[0],
-                        'dueDate': result.value[1],
-                        'important': setImportant
-                        };
-    
-                        oldItems.push(newItem);
-                        self.todos = oldItems
-                        localStorage.setItem('itemsArray', JSON.stringify(oldItems));
-                    })
-                },
-                ArrayToJson(){
-                    JSON.parse(this.todos)
-                },
-                ArrayToStorage(){
-                    localStorage.setItem("itemsArray", JSON.stringify(this.todos) )
-                },
-                deleteItem(item){
-    
-                    var self = this
-    
-                    var olditems = JSON.parse(localStorage.getItem('itemsArray')) || []
-                    console.log(item)
-                    $.each(olditems, function (indexInArray, valueOfElement) { 
-                        if (item === valueOfElement.name){
-                            olditems.splice(indexInArray, 1)
-                            console.log('delete this ' + item)
-                            self.todos = olditems
-                            self.ArrayToStorage()
-                        }
-                    });
-    
-                    Swal.fire({
-                        toast: true,
-                        text: 'Todo Deleted',
-                        position: 'bottom-end',
-                    })
-                },
-                isImportant(item){
-                    if (item){
-                        return '<i class="fas fa-exclamation"></i>'
-                    } else {
-                        return ''
-                    }
-                },
-                compareDates(date){
-                    if (moment(moment().format('L')).isAfter(date)){
-                        return true
-                    }
+        if ($("bookmarks").hasClass("hidden") == false){
+            new Vue({
+                el:'bookmarks',
+                data:{
+                    display: true,
+                    bookmarks: JSON.parse(localStorage.getItem('bookmarks'))
                     
                 },
-                fullscreen(){
-                    $("#todos").toggleClass("active");
-                }
-            },
-            template:`
-            <div id="todos">
-                <p class="todo-title">To-Do List</p>
-                <div class="todos">
-                    
-                    <div class="todo" v-for="items in todos">
-                        <i @click="deleteItem(items.name)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Item"></i>
-                        <a>
-                        <span>
-                            <p class="name">{{items.name}}</p>
-                            <p>{{items.dueDate}}</p>
-                        </span>
-                            <p v-html="isImportant(items.important)" class="important" title="Important"></p>
-                            <i v-if="compareDates(items.dueDate)" class="overdue fas fa-exclamation-triangle" title="Overdue"></i>
-                        </a>
-                    </div>
-                    <i @click="fullscreen" class="fas fa-expand-alt"></i>
-                    <div class="add-item" >
-                        <span @click="openPopup">
-                            Add Item
-                            <i class="fas fa-plus"></i>
-                        <span>
-                    </div>
-                </div>
-                
-            </div>`,
-            
-            
-        })
-    
-        new Vue({
-            el: 'weather',
-            data:{
-                display: true,
-                longitude: null,
-                latitude: null,
-                data: null
-    
-            },
-            mounted () {
-                this.getLocation()
-            },
-            methods:{
-                getLocation() {
-                    if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(this.showPosition);
+                mounted () {
+                    this.ArrayToJson()
+                    if (this.bookmarks === null){
+                        this.bookmarks = []
                     }
+        
+                    
                 },
-                showPosition(position) {
-                    this.latitude = position.coords.latitude
-                    this.longitude = position.coords.longitude
-                
-                    var self = this
-                    console.log("https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric")
-                    $.ajax({
-                        url: "https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric",
-                        context: document.body
-                    }).done(function(content) {
-    
-                        self.data = content
-                        localStorage.setItem("location", content.name)
-                
-                    });
-                },
-                returnImg(img){
-                    return "http://openweathermap.org/img/wn/" + img + ".png"
-                },
-                truncNum(num){
-                    return Math.trunc(num) + "°C";
-                }
-            },
-            template:`
-            <div id="weather">
-                <p class="title">{{data.name}}</p>
-                <p class="description">{{data.weather[0].description}}</p>
-                <span class="temp">
-                    {{truncNum(data.main.temp)}}
-                    <img :src="returnImg(data.weather[0].icon)">
-                </span>
-                <span class="hi-low">
-                    <p>Lows of {{truncNum(data.main.temp_min)}}</p>
-                    <p>Highs of {{truncNum(data.main.temp_max)}}</p>
-                </span>
-                <p class="humidity">Humidity: {{data.main.humidity}}%</p>
-            </div>`,
-            
-        })
-    
-        new Vue({
-            el:'news',
-            data:{
-                display: true,
-                items: null,
-                NewsFirst: null,
-                NewsLast : null,
-    
-                url: 'https://gnews.io/api/v4/top-headlines?token=c739938a812e83d058bf79d67283f77c&lang=en',
-
-                
-            },
-            mounted () {
-                console.clear();
-                this.getItems();
-    
-
-            },
-            methods:{
-                getItems(){
-                    var self = this
-                    $.ajax(this.url).done(function (response) {
-                        console.log(response);
-                        var items = response.articles;
-    
-                        var firstTwo = [];
-                        var lastItems = [];
-    
-                        $.each(items, function (indexInArray, valueOfElement) { 
-    
-                            if (indexInArray >= 2){
-                                lastItems.push(this);
-                            } else {
-                                firstTwo.push(this);
+                methods:{
+                    openPopup(){
+                        Swal.fire({
+                            title: "Add a Bookmark",
+                            text: "Please enter the URL:",
+                            input: 'text',
+                            showCancelButton: true        
+                        }).then((result) => {
+                            if (result.value) {
+                                var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
+        
+                                var newBm = 
+                                {
+                                'url': result.value
+                                };
+        
+                                olditems.push(newBm)
+                                this.bookmarks = olditems
+                                this.ArrayToStorage()
                             }
                         });
-    
-                        self.NewsFirst = firstTwo
-                        self.lastItems = lastItems
-                    });
-                },
-                showMore(){
-                    $(".extend").slideToggle();
-                },
-                validateImg(img){
-                    if (img == null || img == undefined || img == ""){
-                        return '/img/not-found.jpg'
-                    } else {
-                        return img
+                    },
+                    ArrayToJson(){
+                        JSON.parse(this.bookmarks)
+                    },
+                    ArrayToStorage(){
+                        localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks) )
+                    },
+                    fetchFavicon(url){
+                        return 'http://icon.horse/icon/' +  url.replaceAll("https://", "");
+                    },
+                    shortenUrl(url){
+                        return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('.')[0]
+                    },
+                    extendUrl(url){
+                        if (url.includes("https://" || "http://") === false){
+                            url = "https://" + url
+                        }
+                        return url
+                    },
+                    deleteBookmark(BMurl){
+        
+                        var self = this
+        
+                        var olditems = JSON.parse(localStorage.getItem('bookmarks')) || []
+                        console.log(BMurl)
+                        $.each(olditems, function (indexInArray, valueOfElement) { 
+                            if (BMurl === valueOfElement.url){
+                                olditems.splice(indexInArray, 1)
+                                console.log('delete this ' + BMurl)
+                                self.bookmarks = olditems
+                                self.ArrayToStorage()
+                            }
+                        });
                     }
-                }
-            },
-            template:`<div>
-            <p class="todo-title">News</p>
-            <div id="news">
-                    <div class="grid-item" v-for="item in NewsFirst">
-                        <a :href="item.url" target="_blank">
-                            <div class="card">
-                                <img :src="validateImg(item.image)" alt="">
-                                <div class="bottom">
-                                    <p class="title">
-                                        {{item.title}}
-                                    </p>
-                                    <div class="source">
-                                        {{item.source.name}}
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+        
+                },
+                template:`
+                <div id="bookmarks">
+                    
+                    <div class="bookmarks">
+                        
+                        <div class="bookmark" v-for="items in bookmarks">
+                            <i @click="deleteBookmark(items.url)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Bookmark"></i>
+                            <a :href="extendUrl(items.url)" target="_blank">
+                                <img :src="fetchFavicon(items.url)">
+                                {{shortenUrl(items.url) }}
+                            </a>
+                        </div>
+                        <div class="add-bookmark" @click="this.openPopup">
+                            <i class="fas fa-plus" aria-hidden="true"></i>
+                            Add Bookmark
+                        </div>
                     </div>
                     
-                    <div class="grid-item extend" v-for="item in lastItems">
-                        <a :href="item.url" target="_blank">
-                            <div class="card">
-                                <img :src="validateImg(item.image)" alt="">
-                                <div class="bottom">
-                                    <p class="title">
-                                        {{item.title}}
-                                    </p>
-                                    <div class="source">
-                                        {{item.source.name}}
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-    
-                    <a class="btn show-more" @click="showMore">Show More</a>
-            </div>
-            <div>`,
-            
-            
-        })
-
-        new Vue({
-            el:'google-search',
-            data:{
-                query: null,
-                url: 'https://www.google.com/search?q='
-            },
-            mounted(){
-                $("#google-search").keydown(function (e) { 
-                    if  (e.keyCode === 13){
-                        $(".fa-search").click()
-                    }
-                })
-            },
-            methods:{
-                search(){
-                    window.location.href = this.url + this.query;
-                }
-            },
-            template: `
-            <div id="google-area">
-                <input type="text" name="" id="google-search" placeholder="Google Search" v-bind="query">
-                <i class="fas fa-search" @click="search"></i>
-            </div>
-            `
-
-            
-        })
-    
-        new Vue({
-            el:'google-search',
-            data:{
-                query: null,
-                url: 'https://www.google.com/search?q='
-            },
-            mounted(){
-                $("#google-search").keydown(function (e) { 
-                    if  (e.keyCode === 13){
-                        $(".fa-search").click()
-                    }
-                })
-            },
-            methods:{
-                search(){
-                    window.location.href = this.url + this.query;
-                }
-            },
-            template: `
-            <div id="google-area">
-                <input type="text" name="" id="google-search" placeholder="Google Search" v-bind="query">
-                <i class="fas fa-search" @click="search"></i>
-            </div>
-            `
-
-            
-        })
-
-        new Vue({
-            el:'Name-and-Clock',
-            data:{
-                time_of_day: "",
-                d: "",
-                n: "",
-                h: "",
-                m: "",
-                name: "" 
-            },
-            mounted(){
-                this.setTime()
-                setInterval(this.setTime, 5000)
+                </div>`,
                 
-                this.name = localStorage.getItem("name")
-                if (this.name === null || this.name == "[Enter Name]")
-                {
-                    this.name = "[Enter Name]"
-                }
-
-                $("#name").blur(function (e) { 
-                    localStorage.setItem("name", $("#name").val())
-                });
-            },
-            methods:{
-                setTime(){
-                    this.d = new Date();
-                    this.n = this.d.getTime();
-                    this.h = this.d.getHours();
-                    this.m = this.d.getMinutes();
-
-                    if (this.h >= 0) {
-                        this.time_of_day = "morning"
+                
+            })
+        }
+        
+        if ($("todo-list").hasClass("hidden") == false){
+            new Vue({
+                el:'todo-list',
+                data:{
+                    display: true,
+                    todos: JSON.parse(localStorage.getItem('itemsArray'))
+                    
+                },
+                mounted() {
+                    this.ArrayToJson()
+                    if (this.todos === null){
+                        this.todos = []
                     }
                 
-                    if (this.h > 12) {
-                        this.time_of_day = "afternoon"
-                    }
-                
-                    if (this.h > 17) {
-                        this.time_of_day = "evening"
-                    }
-                
-                    if (this.h > 12) {
-                        this.h = this.h - 12;
+                },
+                methods:{
+                    openPopup(){
+                        var self = this
+        
+                        new swal({
+                            title: 'Add Todo',
+                            html:
+                            `<input type="text" id="swal-input1" class="swal2-input" placeholder="Name">
+                                <input type="date" id="swal-input2" name="" id="" class="swal2-input">
+                                <span>
+                                <label for="swal-input3" >Important</label>
+                                <input type="checkbox" id="swal-input3" name="" id="" class="swal2-input">
+                                </span>
+                                `,
+                            preConfirm: function () {
+                            return new Promise(function (resolve) {
+                                resolve([
+                                $('#swal-input1').val(),
+                                $('#swal-input2').val()
+                                ])
+                            })
+                            },
+                            onOpen: function () {
+                            $('#swal-input1').focus()
+                            }
+                        }).then(function (result) {
+        
+                            var oldItems = JSON.parse(localStorage.getItem('itemsArray')) || [];
+        
+                            if(document.querySelector("#swal-input3").checked){
+                                var setImportant = true
+                            } else {
+                                var setImportant = false
+                            }
+        
+                            var newItem = 
+                            {
+                            'name': result.value[0],
+                            'dueDate': result.value[1],
+                            'important': setImportant
+                            };
+        
+                            oldItems.push(newItem);
+                            self.todos = oldItems
+                            localStorage.setItem('itemsArray', JSON.stringify(oldItems));
+                        })
+                    },
+                    ArrayToJson(){
+                        JSON.parse(this.todos)
+                    },
+                    ArrayToStorage(){
+                        localStorage.setItem("itemsArray", JSON.stringify(this.todos) )
+                    },
+                    deleteItem(item){
+        
+                        var self = this
+        
+                        var olditems = JSON.parse(localStorage.getItem('itemsArray')) || []
+                        console.log(item)
+                        $.each(olditems, function (indexInArray, valueOfElement) { 
+                            if (item === valueOfElement.name){
+                                olditems.splice(indexInArray, 1)
+                                console.log('delete this ' + item)
+                                self.todos = olditems
+                                self.ArrayToStorage()
+                            }
+                        });
+        
+                        Swal.fire({
+                            toast: true,
+                            text: 'Todo Deleted',
+                            position: 'bottom-end',
+                        })
+                    },
+                    isImportant(item){
+                        if (item){
+                            return '<i class="fas fa-exclamation"></i>'
+                        } else {
+                            return ''
+                        }
+                    },
+                    compareDates(date){
+                        if (moment(moment().format('L')).isAfter(date)){
+                            return true
+                        }
+                        
+                    },
+                    fullscreen(){
+                        $("#todos").toggleClass("active");
                     }
                 },
-                setName(){
-                    localStorage.setItem("name", this.name.value)
-                }
-            },
-            template: `
-            <div id="name-and-clock">
-                <input type="text" id="name" v-model="name">
-                <p id="introduction">it's currently <span>{{this.m}}</span> minutes past <span>{{this.h}}</span> in the <span>{{this.time_of_day}}</span></p>
-            </div>
-            `
+                template:`
+                <div id="todos">
+                    <p class="todo-title">To-Do List</p>
+                    <div class="todos">
+                        
+                        <div class="todo" v-for="items in todos">
+                            <i @click="deleteItem(items.name)" class="far fa-trash-alt" data-toggle="tooltip" data-placement="right" title="Delete Item"></i>
+                            <a>
+                            <span>
+                                <p class="name">{{items.name}}</p>
+                                <p>{{items.dueDate}}</p>
+                            </span>
+                                <p v-html="isImportant(items.important)" class="important" title="Important"></p>
+                                <i v-if="compareDates(items.dueDate)" class="overdue fas fa-exclamation-triangle" title="Overdue"></i>
+                            </a>
+                        </div>
+                        <i @click="fullscreen" class="fas fa-expand-alt"></i>
+                        <div class="add-item" >
+                            <span @click="openPopup">
+                                Add Item
+                                <i class="fas fa-plus"></i>
+                            <span>
+                        </div>
+                    </div>
+                    
+                </div>`,
+                
+                
+            })
+        }
 
-            
-        })
+        if ($("weather").hasClass("hidden") == false){
+            new Vue({
+                el: 'weather',
+                data:{
+                    display: true,
+                    longitude: null,
+                    latitude: null,
+                    data: null
+        
+                },
+                mounted () {
+                    this.getLocation()
+                },
+                methods:{
+                    getLocation() {
+                        if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(this.showPosition);
+                        }
+                    },
+                    showPosition(position) {
+                        this.latitude = position.coords.latitude
+                        this.longitude = position.coords.longitude
+                    
+                        var self = this
+                        console.log("https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric")
+                        $.ajax({
+                            url: "https://api.openweathermap.org/data/2.5/weather?APPID=ea8837df503db1cc47357bc3289f366e&lat="+ this.latitude +"&lon="+ this.longitude +"&units=metric",
+                            context: document.body
+                        }).done(function(content) {
+        
+                            self.data = content
+                            localStorage.setItem("location", content.name)
+                    
+                        });
+                    },
+                    returnImg(img){
+                        return "http://openweathermap.org/img/wn/" + img + ".png"
+                    },
+                    truncNum(num){
+                        return Math.trunc(num) + "°C";
+                    }
+                },
+                template:`
+                <div id="weather">
+                    <p class="title">{{data.name}}</p>
+
+                    <span class="temp">
+                        {{truncNum(data.main.temp)}}
+                        <img :src="returnImg(data.weather[0].icon)">
+                    </span>
+                    <p class="description">{{data.weather[0].description}}</p>
+                    
+                    <span class="hi-low">
+                        <p>Lows of {{truncNum(data.main.temp_min)}}</p>
+                        <p>Highs of {{truncNum(data.main.temp_max)}}</p>
+                        <p class="humidity">Humidity: {{data.main.humidity}}%</p>
+                    </span>
+                    
+                </div>`,
+                
+            })
+        }
+
+        if ($("news").hasClass("hidden") == false){
+            new Vue({
+                el:'news',
+                data:{
+                    display: true,
+                    items: null,
+                    NewsFirst: null,
+                    NewsLast : null,
+        
+                    url: 'https://gnews.io/api/v4/top-headlines?token=c739938a812e83d058bf79d67283f77c&lang=en',
+
+                    
+                },
+                mounted () {
+                    console.clear();
+                    this.getItems();
+        
+
+                },
+                methods:{
+                    getItems(){
+                        var self = this
+                        $.ajax(this.url).done(function (response) {
+                            console.log(response);
+                            var items = response.articles;
+        
+                            var firstTwo = [];
+                            var lastItems = [];
+        
+                            $.each(items, function (indexInArray, valueOfElement) { 
+        
+                                if (indexInArray >= 2){
+                                    lastItems.push(this);
+                                } else {
+                                    firstTwo.push(this);
+                                }
+                            });
+        
+                            self.NewsFirst = firstTwo
+                            self.lastItems = lastItems
+                        });
+                    },
+                    showMore(){
+                        $(".extend").slideToggle();
+                    },
+                    validateImg(img){
+                        if (img == null || img == undefined || img == ""){
+                            return '/img/not-found.jpg'
+                        } else {
+                            return img
+                        }
+                    }
+                },
+                template:`<div>
+                <p class="todo-title">News</p>
+                <div id="news">
+                        <div class="grid-item" v-for="item in NewsFirst">
+                            <a :href="item.url" target="_blank">
+                                <div class="card">
+                                    <img :src="validateImg(item.image)" alt="">
+                                    <div class="bottom">
+                                        <p class="title">
+                                            {{item.title}}
+                                        </p>
+                                        <div class="source">
+                                            {{item.source.name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="grid-item extend" v-for="item in lastItems">
+                            <a :href="item.url" target="_blank">
+                                <div class="card">
+                                    <img :src="validateImg(item.image)" alt="">
+                                    <div class="bottom">
+                                        <p class="title">
+                                            {{item.title}}
+                                        </p>
+                                        <div class="source">
+                                            {{item.source.name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+        
+                        <a class="btn show-more" @click="showMore">Show More</a>
+                </div>
+                <div>`,
+                
+                
+            })
+        }
+
+        if ($("google-search").hasClass("hidden") == false){
+            new Vue({
+                el:'google-search',
+                data:{
+                    query: null,
+                    url: 'https://www.google.com/search?q='
+                },
+                mounted(){
+                    $("#google-search").keydown(function (e) { 
+                        if  (e.keyCode === 13){
+                            $(".fa-search").click()
+                        }
+                    })
+                },
+                methods:{
+                    search(){
+                        window.location.href = this.url + this.query;
+                    }
+                },
+                template: `
+                <div id="google-area">
+                    <div class="bar">
+                    <input type="text" name="" id="google-search" placeholder="Google Search" v-bind="query">
+                    <i class="fas fa-search" @click="search"></i>
+                    </div>  
+                </div>
+                `
+
+                
+            })
+        }
+
+        if ($("Name-and-Clock").hasClass("hidden") == false){
+            new Vue({
+                el:'Name-and-Clock',
+                data:{
+                    time_of_day: "",
+                    d: "",
+                    n: "",
+                    h: "",
+                    m: "",
+                    name: "" 
+                },
+                mounted(){
+                    this.setTime()
+                    setInterval(this.setTime, 5000)
+                    
+                    this.name = localStorage.getItem("name")
+                    if (this.name === null || this.name == "[Enter Name]")
+                    {
+                        this.name = "[Enter Name]"
+                    }
+
+                    $("#name").blur(function (e) { 
+                        localStorage.setItem("name", $("#name").val())
+                    });
+                },
+                methods:{
+                    setTime(){
+                        this.d = new Date();
+                        this.n = this.d.getTime();
+                        this.h = this.d.getHours();
+                        this.m = this.d.getMinutes();
+
+                        if (this.h >= 0) {
+                            this.time_of_day = "morning"
+                        }
+                    
+                        if (this.h > 12) {
+                            this.time_of_day = "afternoon"
+                        }
+                    
+                        if (this.h > 17) {
+                            this.time_of_day = "evening"
+                        }
+                    
+                        if (this.h > 12) {
+                            this.h = this.h - 12;
+                        }
+                    },
+                    setName(){
+                        localStorage.setItem("name", this.name.value)
+                    }
+                },
+                template: `
+                <div id="name-and-clock">
+                    <input type="text" id="name" v-model="name">
+                    <p id="introduction">it's currently <span>{{this.m}}</span> minutes past <span>{{this.h}}</span> in the <span>{{this.time_of_day}}</span></p>
+                </div>
+                `
+
+                
+            })
+        }
     } 
+
 }

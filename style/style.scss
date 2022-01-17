@@ -1,4 +1,4 @@
-$shadow: 0px 2px 15px 0px #80808026;
+$shadow: 0px 2px 15px 0px #80808014;
 
 :root{
     --accent: #5600ff;
@@ -59,6 +59,11 @@ html{
             color: var(--font);
         }
 
+        #introduction{
+            span{
+                color: var(--accent);
+            }
+        }
         #spotify-area{
             background-color: #191414;
             width: 100%;
@@ -200,27 +205,31 @@ html{
         }
 
         #google-area{
-            position: relative;
-            margin-bottom: 10px;
-            
-            #google-search{
-                font-size: 24px;
-                border: none;
-                border-radius: 40px;
-                padding: 4px 24px;
-                width: 100%;
-                margin-top: 0;
-                box-shadow: $shadow;
+
+            .bar{
+                position: relative;
+                margin-bottom: 10px;
                 
+                #google-search{
+                    font-size: 24px;
+                    border: none;
+                    border-radius: 40px;
+                    padding: 4px 24px;
+                    width: 100%;
+                    margin-top: 0;
+                    box-shadow: $shadow;
+                    
+                }
+                .fa-search{
+                    position: absolute;
+                    right: 14px;
+                    bottom: 15px;
+                    font-size: 22px;
+                    color: #333;
+                    cursor: pointer;
+                }
             }
-            .fa-search{
-                position: absolute;
-                right: 14px;
-                bottom: 15px;
-                font-size: 22px;
-                color: #333;
-                cursor: pointer;
-            }
+            
             
 
         }
@@ -282,6 +291,11 @@ html{
             width: 50px;
             z-index: 100;
             box-shadow: 5px 0px 10px 0px #2424240f;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+
 
             .options{
                 display: flex;
@@ -324,6 +338,8 @@ html{
                         padding: 8px;
                         text-shadow: none;
                     }
+
+                    
                 }
             }
 
@@ -331,8 +347,8 @@ html{
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                position: absolute;
-                bottom:0;
+                //position: absolute;
+                //bottom:0;
                 width: 100%;
 
                 i{
@@ -374,6 +390,48 @@ html{
                         &:hover{
                             background: var(--background);
                             color: var(--accent);
+                            transition: 0.2s;
+                        }
+                    }
+
+                    &.fa-save{
+                        border-radius: 100%;
+                        background: lime;
+                        color: var(--background);
+                        padding: 8px 10px;
+                        text-shadow: none;
+                        font-size: 24px;
+                        margin-bottom: 10px;
+                        display: none;
+
+                        &:after{
+                            display: none;
+                        }
+
+                        &:hover{
+                            background: var(--background);
+                            color: lime;
+                            transition: 0.2s;
+                        }
+                    }
+
+                    &.fa-ban{
+                        border-radius: 100%;
+                        background: red;
+                        color: var(--background);
+                        padding: 8px;
+                        text-shadow: none;
+                        font-size: 24px;
+                        margin-bottom: 10px;
+                        display: none;
+
+                        &:after{
+                            display: none;
+                        }
+
+                        &:hover{
+                            background: var(--background);
+                            color: red;
                             transition: 0.2s;
                         }
                     }
@@ -546,6 +604,14 @@ html{
         div[class^="col-"]{
             margin-bottom: 30px; 
 
+            > *{
+                background: var(--background);
+                padding: 16px;
+                border-radius: 20px;
+                height: 100%;
+                box-shadow: $shadow;
+            }
+
             &.edit{
                 border:dashed yellow 2px;
                 background: rgba(255, 255, 0, 0.1);
@@ -574,6 +640,19 @@ html{
                         position: absolute;
                         top: 10px;
                         right: 10px;
+                        font-size: 16px;
+                    }
+
+                    input.hide-opt{
+                        position: absolute;
+                        top: 10px;
+                        left: 10px;
+                    }
+
+                    p.hide-opt-label{
+                        position: absolute;
+                        top: 4px;
+                        left: 26px;
                         font-size: 16px;
                     }
                 }
@@ -727,9 +806,12 @@ html{
         }
 
         #weather{
-            text-align: right;
+            text-align: right; 
+            position: relative;
+
             .title{
                 font-size: 42px;
+                position: absolute;
             }
 
             .description{
@@ -739,20 +821,24 @@ html{
 
             .temp{
                 color: var(--font);
-                font-size: 32px;
+                font-size: 60px;
                 position: relative;
                 //padding-right: 40px;
 
                 img{
                     position: absolute;
-                    right: 64px;
-                    top: -10px;
+                    right: 120px;
+                    top: 6px;
                 }
             }
 
-            .hi-low, .humidity{
+            .hi-low{
                 color: var(--font);
                 font-size: 16px;
+                position: absolute;
+                left: 18px;
+                bottom: 20px;
+                text-align: left;
             }
         }
 
@@ -803,9 +889,6 @@ html{
         
     }
 
-    html div[class^="col-"]{
-        margin-bottom: 10px;
-    }
 
     @keyframes bouncing-loader {
         to {
