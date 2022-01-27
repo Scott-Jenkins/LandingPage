@@ -96,12 +96,13 @@ $(function () {
         setTimeout(function() {loadSavedLayout()}, 100);
     });
 });
-var components = ['Name-and-Clock', 'weather', 'google-search', 'bookmarks', 'news', 'todo-list']
+var components = ['Name-and-Clock', 'weather', 'google-search', 'bookmarks', 'news', 'todo-list', 'Bank-Holiday', 'Dev-Quote', 'Analogue-Clock']
 
 
 function savePageLayout() {
 
     $('main div[class^="col-"]').removeClass("edit");
+    $('main div[class^="col-"] > *').removeClass("child");
 
     $.each(components, function (indexInArray, valueOfElement) { 
         $(valueOfElement).text("");
@@ -117,18 +118,24 @@ function startEdit(){
         $(".fa-ban").fadeIn();
 
         $('main div[class^="col-"]').toggleClass("edit");
+        $('main div[class^="col-"] > *').toggleClass("child");
 
-        var containers = $('.edit').toArray();
-        dragula(containers, {
-            isContainer: function (el) {
-                return el.classList.contains('edit');
-                
-            }
-        });
-        
+        (function() {
+            dragula([document.querySelector('.row')], {
+              moves: function(el, container, handle) {
+                return !handle.classList.contains('child');
+              }
+            });
+          
+            dragula([].slice.apply(document.querySelectorAll('.edit')), {
+              direction: 'horizontal'
+            });
+        })();
 
+
+          
         $.each(components, function (indexInArray, valueOfElement) { 
-             $(valueOfElement).text(valueOfElement);
+             $(valueOfElement).text(valueOfElement.replaceAll("-", " "))
              $('<i/>',{
                 class: 'fas fa-arrows-alt'
             }).appendTo(valueOfElement);
@@ -141,6 +148,46 @@ function startEdit(){
                 text: 'Hidden',
                 class: 'hide-opt-label'
             }).appendTo(valueOfElement);
+
+            //align buttons
+
+            var alignOptions = $('<span/>',{
+                class: 'align-options',
+            }).appendTo(valueOfElement);
+
+        
+            $('<a/>',{
+                title: 'Align Left',
+                class: 'fas fa-align-left',
+                align: 'text-left'
+            }).appendTo(alignOptions);
+
+            $('<a/>',{
+                title: 'Align Center',
+                class: 'fas fa-align-center',
+                align: 'text-center'
+            }).appendTo(alignOptions);
+
+            $('<a/>',{
+                title: 'Align Right',
+                class: 'fas fa-align-right',
+                align: 'text-right'
+            }).appendTo(alignOptions);
+
+            $(valueOfElement + " .align-options a").each(function (index, element) {
+                var classToAdd = $(this).attr('align');
+                $(this).click(function (e) { 
+                    debugger
+                    e.preventDefault();
+                    $(valueOfElement).removeClass("text-right text-left text-center");
+                    $(valueOfElement).addClass(classToAdd);
+                });
+                
+            });
+
+
+
+
 
             if ($(valueOfElement).hasClass("hidden")){
                 $(valueOfElement + " .hide-opt").prop( "checked", true );
@@ -308,7 +355,7 @@ new Vue({
                     $("#defaultCanvas0").fadeIn('slow');
                     
                 }, 1800);
-                
+
                 $(":root").css("--background", "black")
                 $(":root").css("--font", "white")
                 $(":root").css("--accent", "#00B819")
@@ -928,6 +975,151 @@ function canEdit(answer){
                 `
 
                 
+            })
+        }
+
+        if ($("Bank-Holiday").hasClass("hidden") == false){
+            new Vue({
+                el:'Bank-Holiday',
+                data:{
+                    data: null,
+                    nextDay: null
+                    
+                },
+                mounted(){
+                    this.getDays()
+
+                },
+                methods:{
+                    getDays(){
+                        var self = this
+
+                        $.ajax({
+                            url: "https://www.gov.uk/bank-holidays.json",
+                            data: "data",
+                            success: function (response) {
+                                console.log(response)
+                                self.data = response["england-and-wales"].events
+                                self.getFirstDay(self.data)
+                            }
+                        });
+
+                        
+                    },
+                    getFirstDay(days){
+                        var self = this
+                        $.each(days, function (indexInArray, valueOfElement) { 
+                            //debugger
+                            if (moment(moment().format('L')).isAfter(valueOfElement.date) == false){
+                                self.nextDay = valueOfElement
+                                return false
+                            }
+                        });
+                    }
+
+                },
+                template: `
+                <div id="Bank-Holiday">
+                    <p class="name">
+                    The Next Bank Holiday Is {{nextDay.title}}
+                    </p>
+                    <p class="date">
+                    {{moment(nextDay.date, 'YYYY.MM.DD').format('DD/MM/YYYY')}}
+                    </p>
+                </div>
+                `
+
+                
+            })
+        }
+
+        if ($("Dev-Quote").hasClass("hidden") == false){
+            new Vue({
+                el:'Dev-Quote',
+                data:{
+                    quote: null,
+                    
+                },
+                mounted(){
+                    this.getQuote()
+
+                },
+                methods:{
+                    getQuote(){
+                        var self = this
+
+                        $.ajax({
+                            url: "https://programming-quotes-api.herokuapp.com/quotes/random",
+                            data: "data",
+                            success: function (response) {
+                                self.quote = (response)
+                            }
+                        });
+
+                        
+                    },
+
+
+                },
+                template: `
+                <div id="Dev-Quote">
+                    <p class="quote">
+                    "{{quote.en}}"
+                    </p>
+                    <p class="author">
+                    - {{quote.author}}
+                    </p>
+                </div>
+                `
+
+                
+            })
+        }
+
+        if ($("Analogue-Clock").hasClass("hidden") == false){
+            new Vue({
+                el:'Analogue-Clock',
+                mounted(){
+                    const secondHand = document.querySelector('.second-hand');
+                    const minsHand = document.querySelector('.min-hand');
+                    const hourHand = document.querySelector('.hour-hand');
+                    
+                    function setDate() {
+                      const now = new Date();
+                    
+                      const seconds = now.getSeconds();
+                      const secondsDegrees = ((seconds / 60) * 360) + 90;
+                      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+                    
+                      const mins = now.getMinutes();
+                      const minsDegrees = ((mins / 60) * 360) + ((seconds/60)*6) + 90;
+                      minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+                    
+                      const hour = now.getHours();
+                      const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;
+                      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+                    }
+                    
+                    setInterval(setDate, 1000);
+                    
+                    setDate();
+                },
+
+                template: `
+                <div id="clock">
+                <div class="outer-clock-face">
+                <div class="marking marking-one"></div>
+                <div class="marking marking-two"></div>
+                <div class="marking marking-three"></div>
+                <div class="marking marking-four"></div>
+                <div class="inner-clock-face">
+                  <div class="hand hour-hand"></div>
+                  <div class="hand min-hand"></div>
+                  <div class="hand second-hand"></div>
+                </div>
+              </div>
+                </div>
+                `
             })
         }
     } 

@@ -1,4 +1,4 @@
-$shadow: 0px 2px 15px 0px #80808014;
+$shadow: 0px 2px 15px 0px #8080802e;
 
 :root{
     --accent: #5600ff;
@@ -199,9 +199,9 @@ html{
         }
 
         .todo-title{
-            border-bottom: 3px solid var(--accent);
+            //border-bottom: 3px solid var(--accent);
             font-size: 24px;
-            margin-top: 24px;
+            //margin-top: 24px;
         }
 
         #google-area{
@@ -396,7 +396,7 @@ html{
 
                     &.fa-save{
                         border-radius: 100%;
-                        background: lime;
+                        background: #48cfad;
                         color: var(--background);
                         padding: 8px 10px;
                         text-shadow: none;
@@ -410,14 +410,14 @@ html{
 
                         &:hover{
                             background: var(--background);
-                            color: lime;
+                            color: #48cfad;
                             transition: 0.2s;
                         }
                     }
 
                     &.fa-ban{
                         border-radius: 100%;
-                        background: red;
+                        background: #ed5565;
                         color: var(--background);
                         padding: 8px;
                         text-shadow: none;
@@ -431,7 +431,7 @@ html{
 
                         &:hover{
                             background: var(--background);
-                            color: red;
+                            color: #ed5565;
                             transition: 0.2s;
                         }
                     }
@@ -603,12 +603,15 @@ html{
 
         div[class^="col-"]{
             margin-bottom: 30px; 
+            display: flex;
+            flex-direction: column;
+        
 
             > *{
                 background: var(--background);
                 padding: 16px;
                 border-radius: 20px;
-                //height: 100%;
+                height: 100%;
                 box-shadow: $shadow;
 
                 &:not(:last-child){
@@ -638,10 +641,25 @@ html{
                     color: var(--font);
                     padding: 0px 40px;
                     margin: 20px 0px;
+                    display: flex;
                     position: relative;
+                    align-items: center;
+                    justify-content: center;
 
                     &.hidden{
                         display: block;
+                    }
+
+                    .align-options{
+                        position: absolute;
+                        bottom: 5px;
+                        right: 10px;
+                        font-size: 16px;
+                        
+                        a{
+                            padding-right: 5px;
+                            color: var(--font);
+                        }
                     }
 
                     &:hover{
@@ -673,6 +691,15 @@ html{
             }
         }
 
+        .row.drag{
+            border: dashed cyan 2px;
+            //background: rgba(255, 255, 0, 0.1);
+            text-align: center;
+            text-transform: capitalize;
+            min-height: 40px;
+            padding: 16px 20px;
+        }
+
         /* BVAmbient Style */
         .bvambient_particle
         {
@@ -701,12 +728,13 @@ html{
         #bgImage{
             position: fixed;
             z-index: 0;
-            top: 0;
-            left:0;
+            top: -2px;
+            left: -2px;
             filter: blur(2px);
-            height: 100vh;
-            width: 100%;
+            height: calc(100vh + 4px);
+            width: calc(100% + 4px);
             object-fit: cover;
+            padding: 0px;
         }
 
         #todos{
@@ -743,6 +771,7 @@ html{
                 position: relative;
                 .todo{
                     position: relative;
+                    border-left: 1px solid transparent;
 
                     a{
                         display: flex;
@@ -788,6 +817,7 @@ html{
                     }
 
                     &:hover{
+                        border-left: 1px solid var(--accent) !important;
                         i{
                             visibility: visible;
                             font-size: 14px;
@@ -896,6 +926,164 @@ html{
             }
         }
 
+        #Bank-Holiday{
+            font-size: 24px;
+            text-align: center;
+            text-transform: capitalize;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+
+            .date{
+                font-size: 42px;
+            }
+        }
+
+        #Dev-Quote{
+            font-size: 16px;
+
+            .author{
+                font-size: 24px;
+                text-align: right;
+            }
+        }
+
+        #clock{
+            //width: 30rem;
+            //height: 30rem;
+            aspect-ratio: 1 / 1;
+            border: 7px solid var(--font);
+            box-shadow: -4px -4px 10px rgba(67,67,67,0.5),
+                            inset 4px 4px 10px rgba(0,0,0,0.5),
+                            inset -4px -4px 10px rgba(67,67,67,0.5),
+                            4px 4px 10px rgba(0,0,0,0.3);
+            border-radius: 50%;
+            //margin: 50px auto;
+            position: relative;
+            padding: 1rem;
+            max-height: 260px;
+            min-height: 200px;
+            margin: 0px auto 30px;
+
+            .outer-clock-face {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                border-radius: 100%;
+                background: var(--background);
+                
+               
+                overflow: hidden;
+              }
+              
+              .outer-clock-face::after {
+                -webkit-transform: rotate(90deg);
+                -moz-transform: rotate(90deg);
+                transform: rotate(90deg)
+              }
+              
+              .outer-clock-face::before,
+              .outer-clock-face::after,
+              .outer-clock-face .marking{
+                content: '';
+                position: absolute;
+                width: 5px;
+                height: 100%;
+                background: var(--accent);
+                z-index: 0;
+                left: 49%;
+              }
+              
+              .outer-clock-face .marking {
+                background: var(--font);
+                width: 3px;
+              }
+              
+              .outer-clock-face .marking.marking-one {
+                -webkit-transform: rotate(30deg);
+                -moz-transform: rotate(30deg);
+                transform: rotate(30deg)
+              }
+              
+              .outer-clock-face .marking.marking-two {
+                -webkit-transform: rotate(60deg);
+                -moz-transform: rotate(60deg);
+                transform: rotate(60deg)
+              }
+              
+              .outer-clock-face .marking.marking-three {
+                -webkit-transform: rotate(120deg);
+                -moz-transform: rotate(120deg);
+                transform: rotate(120deg)
+              }
+              
+              .outer-clock-face .marking.marking-four {
+                -webkit-transform: rotate(150deg);
+                -moz-transform: rotate(150deg);
+                transform: rotate(150deg)
+              }
+              
+              .inner-clock-face {
+                position: absolute;
+                top: 10%;
+                left: 10%;
+                width: 80%;
+                height: 80%;
+                background: var(--background);
+                -webkit-border-radius: 100%;
+                -moz-border-radius: 100%;
+                border-radius: 100%;
+                z-index: 1;
+              }
+              
+              .inner-clock-face::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 16px;
+                height: 16px;
+                border-radius: 18px;
+                margin-left: -9px;
+                margin-top: -6px;
+                background: #4d4b63;
+                z-index: 11;
+              }
+              
+              .hand {
+                width: 50%;
+                right: 50%;
+                height: 6px;
+                background: var(--font);
+                position: absolute;
+                top: 50%;
+                border-radius: 6px;
+                transform-origin: 100%;
+                transform: rotate(90deg);
+                transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+              }
+              
+              .hand.hour-hand {
+                width: 30%;
+                z-index: 3;
+              }
+              
+              .hand.min-hand {
+                height: 3px;
+                z-index: 10;
+                width: 40%;
+              }
+              
+              .hand.second-hand {
+                background: #ee791a;
+                width: 45%;
+                height: 2px;
+              }
+        }
+
+        
+
         
 
         
@@ -979,3 +1167,70 @@ body::before {
     pointer-events: none;
 }
 */
+
+
+
+
+//dragula stuff
+
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+    cursor: grab;
+    border: 2px dashed var(--font);
+    color: var(--font);
+    padding: 0px 40px;
+    margin: 20px 0px;
+    position: relative;
+    text-align: center;
+    text-transform: capitalize;
+    border-radius: 20px;
+
+    &.hidden{
+        display: block;
+    }
+
+    &:hover{
+        filter: brightness(0.9);
+    }
+
+    i{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 16px;
+    }
+
+    input.hide-opt{
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    p.hide-opt-label{
+        position: absolute;
+        top: 4px;
+        left: 26px;
+        font-size: 16px;
+    }
+
+
+}
+.gu-hide {
+display: none !important;
+}
+.gu-unselectable {
+-webkit-user-select: none !important;
+-moz-user-select: none !important;
+-ms-user-select: none !important;
+user-select: none !important;
+}
+.gu-transit {
+opacity: 0.2;
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+filter: alpha(opacity=20);
+}

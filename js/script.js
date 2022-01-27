@@ -1,29 +1,4 @@
 
-/////////////////////////////////////////////////////ignore above
-
-// let nameLabel = document.querySelector("#name")
-
-// getName()
-
-// function getName(){
-//     let name = localStorage.getItem("name")
-
-//     if (name === null)
-//     {
-//         nameLabel.value = "[Enter Name]"
-        
-//     } else
-//     {
-//         nameLabel.value = name
-//     }
-// }
-// function setName(){
-//     localStorage.setItem("name", nameLabel.value)
-//     getName()
-// }
-// nameLabel.addEventListener('blur', setName)
-
-/////////////////////////////////////////////////////Colour
 let BGColor = document.querySelector("#BG-Color")
 
 getColour()
@@ -69,9 +44,7 @@ function getFTColour(){
         $("body, #name").css("color", FT)
         $("#Category-Option").css("color", FT)
         $("a").css("color", FT + " !important")
-        //$(".grid-item .card a").css("color", FT)
         $("input").css("color", FT + " !important")
-        //$(".grid-item .card").css("color", FT + " !important")
         $(".item-dueDate").css("color", FT + " !important")
         $(":root").css("--font", FT)
         
@@ -101,7 +74,6 @@ function getATColour(){
         $("#introduction span").css("color", AT)
         $("#Category-Option").css("border-color", AT)
         $("#todo .header").css("border-color", AT)
-        //$("*").css("border-color", AT)
         $(":root").css("--accent", AT)
         $("html #sidebar .options .option:hover:after").css("background-color", AT + " !important")
     }
@@ -128,5 +100,4 @@ $( ".loading" ).each(function( index ) {
           
       }
   });
-
 

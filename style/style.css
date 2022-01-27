@@ -152,8 +152,8 @@ html body #news .grid-item .card {
   border-radius: 14px;
   background: #ffffff;
   border: none;
-  -webkit-box-shadow: 0px 2px 15px 0px #80808014;
-          box-shadow: 0px 2px 15px 0px #80808014;
+  -webkit-box-shadow: 0px 2px 15px 0px #8080802e;
+          box-shadow: 0px 2px 15px 0px #8080802e;
 }
 
 html body #news .grid-item .card img {
@@ -220,9 +220,7 @@ html #Category-Option {
 }
 
 html .todo-title {
-  border-bottom: 3px solid var(--accent);
   font-size: 24px;
-  margin-top: 24px;
 }
 
 html #google-area .bar {
@@ -237,8 +235,8 @@ html #google-area .bar #google-search {
   padding: 4px 24px;
   width: 100%;
   margin-top: 0;
-  -webkit-box-shadow: 0px 2px 15px 0px #80808014;
-          box-shadow: 0px 2px 15px 0px #80808014;
+  -webkit-box-shadow: 0px 2px 15px 0px #8080802e;
+          box-shadow: 0px 2px 15px 0px #8080802e;
 }
 
 html #google-area .bar .fa-search {
@@ -433,7 +431,7 @@ html #sidebar .settings i.fa-pen:hover {
 
 html #sidebar .settings i.fa-save {
   border-radius: 100%;
-  background: lime;
+  background: #48cfad;
   color: var(--background);
   padding: 8px 10px;
   text-shadow: none;
@@ -448,14 +446,14 @@ html #sidebar .settings i.fa-save:after {
 
 html #sidebar .settings i.fa-save:hover {
   background: var(--background);
-  color: lime;
+  color: #48cfad;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
 
 html #sidebar .settings i.fa-ban {
   border-radius: 100%;
-  background: red;
+  background: #ed5565;
   color: var(--background);
   padding: 8px;
   text-shadow: none;
@@ -470,7 +468,7 @@ html #sidebar .settings i.fa-ban:after {
 
 html #sidebar .settings i.fa-ban:hover {
   background: var(--background);
-  color: red;
+  color: #ed5565;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
@@ -674,14 +672,22 @@ html a:link, html a:active {
 
 html div[class^="col-"] {
   margin-bottom: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 html div[class^="col-"] > * {
   background: var(--background);
   padding: 16px;
   border-radius: 20px;
-  -webkit-box-shadow: 0px 2px 15px 0px #80808014;
-          box-shadow: 0px 2px 15px 0px #80808014;
+  height: 100%;
+  -webkit-box-shadow: 0px 2px 15px 0px #8080802e;
+          box-shadow: 0px 2px 15px 0px #8080802e;
 }
 
 html div[class^="col-"] > *:not(:last-child) {
@@ -721,11 +727,32 @@ html div[class^="col-"].edit > * {
   color: var(--font);
   padding: 0px 40px;
   margin: 20px 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   position: relative;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 html div[class^="col-"].edit > *.hidden {
   display: block;
+}
+
+html div[class^="col-"].edit > * .align-options {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 16px;
+}
+
+html div[class^="col-"].edit > * .align-options a {
+  padding-right: 5px;
+  color: var(--font);
 }
 
 html div[class^="col-"].edit > *:hover {
@@ -751,6 +778,14 @@ html div[class^="col-"].edit > * p.hide-opt-label {
   top: 4px;
   left: 26px;
   font-size: 16px;
+}
+
+html .row.drag {
+  border: dashed cyan 2px;
+  text-align: center;
+  text-transform: capitalize;
+  min-height: 40px;
+  padding: 16px 20px;
 }
 
 html .bvambient_particle {
@@ -781,14 +816,15 @@ html #defaultCanvas0 {
 html #bgImage {
   position: fixed;
   z-index: 0;
-  top: 0;
-  left: 0;
+  top: -2px;
+  left: -2px;
   -webkit-filter: blur(2px);
           filter: blur(2px);
-  height: 100vh;
-  width: 100%;
+  height: calc(100vh + 4px);
+  width: calc(100% + 4px);
   -o-object-fit: cover;
      object-fit: cover;
+  padding: 0px;
 }
 
 html #todos.active {
@@ -822,6 +858,7 @@ html #todos .todos {
 
 html #todos .todos .todo {
   position: relative;
+  border-left: 1px solid transparent;
 }
 
 html #todos .todos .todo a {
@@ -871,6 +908,10 @@ html #todos .todos .todo .overdue {
   right: 42px;
   top: 16px;
   color: red;
+}
+
+html #todos .todos .todo:hover {
+  border-left: 1px solid var(--accent) !important;
 }
 
 html #todos .todos .todo:hover i {
@@ -1001,6 +1042,159 @@ html #swal2-html-container span input {
   margin-top: 0;
 }
 
+html #Bank-Holiday {
+  font-size: 24px;
+  text-align: center;
+  text-transform: capitalize;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+html #Bank-Holiday .date {
+  font-size: 42px;
+}
+
+html #Dev-Quote {
+  font-size: 16px;
+}
+
+html #Dev-Quote .author {
+  font-size: 24px;
+  text-align: right;
+}
+
+html #clock {
+  aspect-ratio: 1 / 1;
+  border: 7px solid var(--font);
+  -webkit-box-shadow: -4px -4px 10px rgba(67, 67, 67, 0.5), inset 4px 4px 10px rgba(0, 0, 0, 0.5), inset -4px -4px 10px rgba(67, 67, 67, 0.5), 4px 4px 10px rgba(0, 0, 0, 0.3);
+          box-shadow: -4px -4px 10px rgba(67, 67, 67, 0.5), inset 4px 4px 10px rgba(0, 0, 0, 0.5), inset -4px -4px 10px rgba(67, 67, 67, 0.5), 4px 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  position: relative;
+  padding: 1rem;
+  max-height: 260px;
+  min-height: 200px;
+  margin: 0px auto 30px;
+}
+
+html #clock .outer-clock-face {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  background: var(--background);
+  overflow: hidden;
+}
+
+html #clock .outer-clock-face::after {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+html #clock .outer-clock-face::before,
+html #clock .outer-clock-face::after,
+html #clock .outer-clock-face .marking {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 100%;
+  background: var(--accent);
+  z-index: 0;
+  left: 49%;
+}
+
+html #clock .outer-clock-face .marking {
+  background: var(--font);
+  width: 3px;
+}
+
+html #clock .outer-clock-face .marking.marking-one {
+  -webkit-transform: rotate(30deg);
+  transform: rotate(30deg);
+}
+
+html #clock .outer-clock-face .marking.marking-two {
+  -webkit-transform: rotate(60deg);
+  transform: rotate(60deg);
+}
+
+html #clock .outer-clock-face .marking.marking-three {
+  -webkit-transform: rotate(120deg);
+  transform: rotate(120deg);
+}
+
+html #clock .outer-clock-face .marking.marking-four {
+  -webkit-transform: rotate(150deg);
+  transform: rotate(150deg);
+}
+
+html #clock .inner-clock-face {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background: var(--background);
+  border-radius: 100%;
+  z-index: 1;
+}
+
+html #clock .inner-clock-face::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 18px;
+  margin-left: -9px;
+  margin-top: -6px;
+  background: #4d4b63;
+  z-index: 11;
+}
+
+html #clock .hand {
+  width: 50%;
+  right: 50%;
+  height: 6px;
+  background: var(--font);
+  position: absolute;
+  top: 50%;
+  border-radius: 6px;
+  -webkit-transform-origin: 100%;
+          transform-origin: 100%;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  -webkit-transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+          transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+}
+
+html #clock .hand.hour-hand {
+  width: 30%;
+  z-index: 3;
+}
+
+html #clock .hand.min-hand {
+  height: 3px;
+  z-index: 10;
+  width: 40%;
+}
+
+html #clock .hand.second-hand {
+  background: #ee791a;
+  width: 45%;
+  height: 2px;
+}
+
 @-webkit-keyframes bouncing-loader {
   to {
     opacity: 0.1;
@@ -1111,4 +1305,68 @@ body::before {
     pointer-events: none;
 }
 */
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  cursor: -webkit-grab;
+  cursor: grab;
+  border: 2px dashed var(--font);
+  color: var(--font);
+  padding: 0px 40px;
+  margin: 20px 0px;
+  position: relative;
+  text-align: center;
+  text-transform: capitalize;
+  border-radius: 20px;
+}
+
+.gu-mirror.hidden {
+  display: block;
+}
+
+.gu-mirror:hover {
+  -webkit-filter: brightness(0.9);
+          filter: brightness(0.9);
+}
+
+.gu-mirror i {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+}
+
+.gu-mirror input.hide-opt {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.gu-mirror p.hide-opt-label {
+  position: absolute;
+  top: 4px;
+  left: 26px;
+  font-size: 16px;
+}
+
+.gu-hide {
+  display: none !important;
+}
+
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
 /*# sourceMappingURL=style.css.map */
